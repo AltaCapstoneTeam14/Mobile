@@ -45,7 +45,6 @@ class MyApp extends StatelessWidget {
             '/register': (_) => const ResgisterPage(),
             '/homepage': (_) => const HomePage(),
             '/topup': (_) => const TopupPage(),
-            '/confirmtopup': (_) => const ConfirmTopup(),
           },
           home: state.isAuth
               ? const HomePage()
