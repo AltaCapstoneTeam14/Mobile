@@ -1,3 +1,4 @@
+import 'package:capstone_project/Components/appbar_primary.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
@@ -93,7 +94,9 @@ class _TopupPageState extends State<TopupPage> {
                   ),
                   RoundedButton(
                     text: "Lanjut",
-                    press: () {},
+                    press: () {
+                      Navigator.pushNamed(context, '/confirmtopup');
+                    },
                     color: kPrimaryColor,
                     width: size.width,
                   ),
@@ -107,7 +110,7 @@ class _TopupPageState extends State<TopupPage> {
   }
 }
 
-class ProductCard extends StatefulWidget {
+class ProductCard extends StatelessWidget {
   final String amount;
   final VoidCallback onTap;
   final bool selected;
@@ -119,21 +122,16 @@ class ProductCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ProductCard> createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
           side: BorderSide(
             color: kPrimaryColor,
             width: 4,
-            style: widget.selected ? BorderStyle.solid : BorderStyle.none,
+            style: selected ? BorderStyle.solid : BorderStyle.none,
           ),
         ),
         elevation: 5,
@@ -150,45 +148,15 @@ class _ProductCardState extends State<ProductCard> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: HomeTextStyle(
-                  size: 14,
-                  content: "Rp. ${widget.amount}",
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500),
+                size: 14,
+                content: "Rp $amount",
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class AppBarPrimary extends StatelessWidget implements PreferredSizeWidget {
-  final String content;
-  const AppBarPrimary({
-    Key? key,
-    required this.content,
-  }) : super(key: key);
-
-  @override
-  Size get preferredSize => const Size.fromHeight(60);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      titleTextStyle: const TextStyle(
-        fontFamily: 'Poppins',
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: Colors.black,
-      ),
-      iconTheme: const IconThemeData(
-        color: Colors.black,
-        size: 32,
-      ),
-      title: Text(content),
-      centerTitle: true,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
     );
   }
 }

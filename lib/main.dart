@@ -1,6 +1,7 @@
 import 'package:capstone_project/Screens/Homepage/homepage.dart';
 import 'package:capstone_project/Screens/Login/login.dart';
 import 'package:capstone_project/Screens/Register/register.dart';
+import 'package:capstone_project/Screens/Topup/components/konfirmasi_topup.dart';
 import 'package:capstone_project/Screens/Topup/topup.dart';
 import 'package:capstone_project/State/auth_provider.dart';
 import 'package:capstone_project/State/home_provider.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
             '/register': (_) => const ResgisterPage(),
             '/homepage': (_) => const HomePage(),
             '/topup': (_) => const TopupPage(),
+            '/confirmtopup': (_) => const ConfirmTopup(),
           },
           home: state.isAuth
               ? const HomePage()
