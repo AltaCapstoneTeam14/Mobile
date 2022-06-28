@@ -120,7 +120,9 @@ class _TopupPageState extends State<TopupPage> {
                       } else {
                         getToast.showSnackBar(
                           toastDialog(
-                              "Please select the transfer amount", Colors.red),
+                            "Please select the transfer amount",
+                            Colors.red,
+                          ),
                         );
                       }
                     },

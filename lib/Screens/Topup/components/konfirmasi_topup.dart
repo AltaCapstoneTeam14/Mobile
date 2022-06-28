@@ -162,7 +162,126 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30.0),
+                            topRight: Radius.circular(30.0),
+                          ),
+                        ),
+                        backgroundColor: Colors.white,
+                        builder: (_) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(30.0),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 10,
+                                      offset: Offset(0, 3),
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    const Divider(
+                                      thickness: 5,
+                                      indent: 170,
+                                      endIndent: 170,
+                                      color: Colors.grey,
+                                      height: 20,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 10,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          const HomeTextStyle(
+                                            size: 16,
+                                            content: "Pilih Metode Pembayaran",
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: const Icon(
+                                              Icons.close_rounded,
+                                              size: 35,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const Padding(padding: EdgeInsets.only(top: 20)),
+                              GestureDetector(
+                                onTap: () {},
+                                child: const ListTile(
+                                  leading: Icon(
+                                    Icons.credit_card_rounded,
+                                    color: kPrimaryColor,
+                                    size: 50,
+                                  ),
+                                  title: HomeTextStyle(
+                                    size: 16,
+                                    content: "ATM/Bank Transfer",
+                                    color: Color(0xFF666666),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  subtitle: HomeTextStyle(
+                                    size: 13,
+                                    content:
+                                        "Pay from ATM Bersama, Prima or Alto",
+                                    color: Color(0xFF666666),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: ListTile(
+                                  leading: Image.asset(
+                                    "assets/icons/gopay.png",
+                                    scale: 2.1,
+                                  ),
+                                  title: const HomeTextStyle(
+                                    size: 16,
+                                    content: "GoPay/other e-Wallets",
+                                    color: Color(0xFF666666),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  subtitle: const HomeTextStyle(
+                                    size: 13,
+                                    content:
+                                        "Scan QR code using GoPay or other e-wallets",
+                                    color: Color(0xFF666666),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const Padding(padding: EdgeInsets.only(top: 20)),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
