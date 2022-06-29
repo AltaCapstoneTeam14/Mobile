@@ -1,10 +1,13 @@
 import 'package:capstone_project/Components/appbar_primary.dart';
+import 'package:capstone_project/Components/com_helper.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Components/loading_animation.dart';
+import 'package:capstone_project/Components/product_card.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/scroll_behavior.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
+import 'package:capstone_project/Screens/Topup/components/konfirmasi_topup.dart';
 import 'package:capstone_project/State/enum.dart';
 import 'package:capstone_project/State/topup_provider.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +36,10 @@ class _TopupPageState extends State<TopupPage> {
       optionSelected = index;
     });
   }
+
+  int? harga;
+  int? total;
+  int? id;
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +90,12 @@ class _TopupPageState extends State<TopupPage> {
                               amount: state.data[i].amount.toString(),
                               onTap: () {
                                 checkOption(i + 1);
+                                harga = state.data[i].amount;
+                                total = state.data[i].grossAmount;
+                                id = state.data[i].id;
                               },
                               selected: i + 1 == optionSelected,
+                              url: "assets/icons/gold-coins.png",
                             );
                           },
                           itemCount: state.data.length,
@@ -94,68 +105,36 @@ class _TopupPageState extends State<TopupPage> {
                   ),
                   RoundedButton(
                     text: "Lanjut",
-                    press: () {
-                      Navigator.pushNamed(context, '/confirmtopup');
-                    },
                     color: kPrimaryColor,
                     width: size.width,
+                    press: () {
+                      final getToast = ScaffoldMessenger.of(context);
+                      if (optionSelected != 0) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ConfirmTopup(
+                              amount: harga!,
+                              grossAmount: total!,
+                              id: id!,
+                            ),
+                          ),
+                        );
+                      } else {
+                        getToast.showSnackBar(
+                          toastDialog(
+                            "Please select the transfer amount",
+                            Colors.red,
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  final String amount;
-  final VoidCallback onTap;
-  final bool selected;
-  const ProductCard({
-    Key? key,
-    required this.amount,
-    required this.onTap,
-    required this.selected,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          side: BorderSide(
-            color: kPrimaryColor,
-            width: 4,
-            style: selected ? BorderStyle.solid : BorderStyle.none,
-          ),
-        ),
-        elevation: 5,
-        margin: const EdgeInsets.all(6),
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/icons/gold-coins.png"),
-              alignment: Alignment.topCenter,
-            ),
-          ),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: HomeTextStyle(
-                size: 14,
-                content: "Rp $amount",
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
