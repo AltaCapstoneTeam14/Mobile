@@ -1,11 +1,9 @@
 import 'package:capstone_project/Components/appbar_primary.dart';
-import 'package:capstone_project/Components/error_page.dart';
-import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
-import 'package:capstone_project/State/enum.dart';
-import 'package:capstone_project/State/topup_provider.dart';
+import 'package:capstone_project/Screens/Topup/components/bank_transfer.dart';
+import 'package:capstone_project/State/pembayaran_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +21,11 @@ class ConfirmTopup extends StatefulWidget {
 }
 
 class _ConfirmTopupState extends State<ConfirmTopup> {
+  // String? method;
   @override
   Widget build(BuildContext context) {
+    final getProvider = Provider.of<PaymentState>(context);
+    // String realMethod = getProvider.method!;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const AppBarPrimary(
@@ -232,7 +233,15 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                               ),
                               const Padding(padding: EdgeInsets.only(top: 20)),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const BankTransfer(),
+                                    ),
+                                  );
+                                },
                                 child: const ListTile(
                                   leading: Icon(
                                     Icons.credit_card_rounded,
@@ -254,8 +263,12 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                                   ),
                                 ),
                               ),
+                              // Gopay Payment
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  getProvider.addMethod("Gopay");
+                                  Navigator.pop(context);
+                                },
                                 child: ListTile(
                                   leading: Image.asset(
                                     "assets/icons/gopay.png",
@@ -288,16 +301,18 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                         vertical: 10,
                       ),
                       child: Row(
-                        children: const <Widget>[
-                          Icon(
+                        children: <Widget>[
+                          const Icon(
                             Icons.more_horiz_rounded,
                             color: kPrimaryColor,
                             size: 30,
                           ),
-                          Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                          const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5)),
                           HomeTextStyle(
                             size: 16,
-                            content: "Pilih Metode Pembayaran",
+                            content:
+                                getProvider.method ?? "Pilih Metode Pembayaran",
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           )

@@ -1,10 +1,10 @@
 import 'package:capstone_project/Screens/Homepage/homepage.dart';
 import 'package:capstone_project/Screens/Login/login.dart';
 import 'package:capstone_project/Screens/Register/register.dart';
-import 'package:capstone_project/Screens/Topup/components/konfirmasi_topup.dart';
 import 'package:capstone_project/Screens/Topup/topup.dart';
 import 'package:capstone_project/State/auth_provider.dart';
 import 'package:capstone_project/State/home_provider.dart';
+import 'package:capstone_project/State/pembayaran_provider.dart';
 import 'package:capstone_project/State/profile_provider.dart';
 import 'package:capstone_project/State/topup_provider.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => TopupState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PaymentState(),
         ),
       ],
       builder: (context, child) => Consumer<AuthState>(
