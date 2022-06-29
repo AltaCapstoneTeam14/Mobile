@@ -21,7 +21,7 @@ class BankTransfer extends StatelessWidget {
           itemBuilder: (ctx, i) {
             return GestureDetector(
               onTap: () {
-                getProvider.addMethod("Bank ${items[i].name.toUpperCase()}");
+                getProvider.addMethod(items[i].name.toUpperCase());
                 int count = 0;
                 Navigator.of(context).popUntil((_) => count++ >= 2);
               },

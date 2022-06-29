@@ -39,6 +39,7 @@ class _TopupPageState extends State<TopupPage> {
 
   int? harga;
   int? total;
+  int? id;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +92,7 @@ class _TopupPageState extends State<TopupPage> {
                                 checkOption(i + 1);
                                 harga = state.data[i].amount;
                                 total = state.data[i].grossAmount;
+                                id = state.data[i].id;
                               },
                               selected: i + 1 == optionSelected,
                               url: "assets/icons/gold-coins.png",
@@ -114,6 +116,7 @@ class _TopupPageState extends State<TopupPage> {
                             builder: (context) => ConfirmTopup(
                               amount: harga!,
                               grossAmount: total!,
+                              id: id!,
                             ),
                           ),
                         );

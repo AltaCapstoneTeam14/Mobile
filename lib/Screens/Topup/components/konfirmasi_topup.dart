@@ -1,19 +1,24 @@
 import 'package:capstone_project/Components/appbar_primary.dart';
+import 'package:capstone_project/Components/com_helper.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
+import 'package:capstone_project/Model/topup/payment_request.dart';
 import 'package:capstone_project/Screens/Topup/components/bank_transfer.dart';
 import 'package:capstone_project/State/pembayaran_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmTopup extends StatefulWidget {
   final int amount;
   final int grossAmount;
+  final int id;
   const ConfirmTopup({
     Key? key,
     required this.amount,
     required this.grossAmount,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -25,6 +30,16 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
   @override
   Widget build(BuildContext context) {
     final getProvider = Provider.of<PaymentState>(context);
+
+    Future<void> _launchInBrowser(Uri url) async {
+      if (!await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw 'Could not launch $url';
+      }
+    }
+
     // String realMethod = getProvider.method!;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -322,7 +337,30 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                   ),
                   RoundedButton(
                     text: "Bayar",
-                    press: () {},
+                    press: () async {
+                      final getToast = ScaffoldMessenger.of(context);
+                      final getData = getProvider.method;
+                      late var setData = PaymentModel(
+                        productId: widget.id,
+                        transferMethod: getData!.toLowerCase(),
+                      );
+                      if (getData == "Gopay") {
+                        final setGopay = await getProvider.gopayTopup(setData);
+                        _launchInBrowser(
+                          Uri.parse(setGopay.data!.actions![1].url.toString()),
+                        );
+                      } else if (getData == "BCA" ||
+                          getData == "BNI" ||
+                          getData == "BRI") {
+                        final setBank = await getProvider.bankTopup(setData);
+                        print(setBank.data!.vaNumber);
+                      } else {
+                        getToast.showSnackBar(
+                          toastDialog('Please choose a payment method',
+                              Colors.redAccent),
+                        );
+                      }
+                    },
                     color: kPrimaryColor,
                     width: size.width * 0.9,
                   ),
