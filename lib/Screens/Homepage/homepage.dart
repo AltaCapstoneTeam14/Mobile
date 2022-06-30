@@ -81,11 +81,13 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
         fit: BoxFit.cover,
         scale: 1.5,
       ),
+      centerTitle: false,
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.only(right: 12),
           child: Icon(
             Icons.notifications_active,
             color: Colors.yellow.shade600,

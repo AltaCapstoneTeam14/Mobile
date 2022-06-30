@@ -6,8 +6,8 @@ import 'package:flutter/cupertino.dart';
 
 class PaymentState extends ChangeNotifier {
   TopupService getService = TopupService();
-  String? _method;
-  String? get method => _method;
+  String _method = "null";
+  String get method => _method;
 
   addMethod(String setMethod) {
     _method = setMethod;
