@@ -354,6 +354,9 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                         getProvider.addMethod("null");
                         // dismiss dialog loading
                         navigator.pop();
+                        _launchInBrowser(
+                          Uri.parse(setGopay.data!.actions![1].url.toString()),
+                        );
                         navigator.push(
                           MaterialPageRoute(
                             builder: (context) => PendingPage(
@@ -361,9 +364,6 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                               status: setGopay.data!.status!,
                             ),
                           ),
-                        );
-                        _launchInBrowser(
-                          Uri.parse(setGopay.data!.actions![1].url.toString()),
                         );
                       } else if (getData == "BCA" ||
                           getData == "BNI" ||
