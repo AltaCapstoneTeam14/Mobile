@@ -1,9 +1,10 @@
 import 'package:capstone_project/Components/scroll_behavior.dart';
+import 'package:capstone_project/Components/shimmer_widget.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Components/error_page.dart';
-import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Screens/Homepage/Page/components/info_container.dart';
 import 'package:capstone_project/Screens/Homepage/Page/components/promo_widgets.dart';
+import 'package:capstone_project/Screens/Homepage/homepage.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/enum.dart';
 import 'package:flutter/material.dart';
@@ -32,103 +33,124 @@ class _HomeState extends State<Home> {
     super.didChangeDependencies();
   }
 
+  // Future<void> refreshData() async {}
+
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeState>(
       builder: (BuildContext context, state, child) {
         if (state.stateType == StateType.loading) {
-          return const LoadingAnimation();
+          return Column(
+            children: [
+              ShimmerWidgets(
+                child: InfoContainer(
+                  size: widget.size,
+                  balance: "100000",
+                  phone: "000000000000",
+                ),
+              ),
+            ],
+          );
         }
         if (state.stateType == StateType.error) {
           return const ErrorPage();
         }
         return ScrollConfiguration(
           behavior: MyBehavior(),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: <Widget>[
-                InfoContainer(
-                  size: widget.size,
-                  balance: state.data.balance!.amount.toString(),
-                  phone: state.data.phone.toString(),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 15)),
-                FiturButton(size: widget.size),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15, bottom: 10, top: 15),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: HomeTextStyle(
-                        size: 16,
-                        content: 'Service',
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+                (Route<dynamic> route) => false,
+              );
+            },
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: <Widget>[
+                  InfoContainer(
+                    size: widget.size,
+                    balance: state.data.balance!.amount.toString(),
+                    phone: state.data.phone.toString(),
                   ),
-                ),
-                GridView.count(
-                  crossAxisCount: 3,
-                  shrinkWrap: true,
-                  childAspectRatio: 1.2,
-                  children: const <Widget>[
-                    PilihanButton(
-                        url: 'assets/icons/icon-pulsa.png',
-                        scale: 2,
-                        content: 'Pulsa'),
-                    PilihanButton(
-                        url: 'assets/icons/paket-data.png',
-                        scale: 2,
-                        content: 'Paket Data'),
-                    PilihanButton(
-                        url: 'assets/icons/voucher.png',
-                        scale: 2,
-                        content: 'Voucher'),
-                    PilihanButton(
-                        url: 'assets/icons/e-money.png',
-                        scale: 2,
-                        content: 'E-Money'),
-                    PilihanButton(
-                      url: 'assets/icons/drop.png',
-                      scale: 2,
-                      content: 'PDAM',
-                    ),
-                    PilihanButton(
-                        url: 'assets/icons/lighting.png',
-                        scale: 2,
-                        content: 'PLN'),
-                  ],
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15, bottom: 10),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: HomeTextStyle(
-                        size: 16,
-                        content: 'Promo',
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: const <Widget>[
-                        PromoWidgets(
-                          url: 'assets/images/promo-1.png',
-                        ),
-                        PromoWidgets(
-                          url: 'assets/images/promo-2.png',
-                        ),
-                        PromoWidgets(
-                          url: 'assets/images/promo-3.png',
-                        ),
-                      ],
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+                  FiturButton(size: widget.size),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15, bottom: 10, top: 15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: HomeTextStyle(
+                          size: 16,
+                          content: 'Service',
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                )
-              ],
+                  GridView.count(
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    childAspectRatio: 1.2,
+                    children: const <Widget>[
+                      PilihanButton(
+                          url: 'assets/icons/icon-pulsa.png',
+                          scale: 2,
+                          content: 'Pulsa'),
+                      PilihanButton(
+                          url: 'assets/icons/paket-data.png',
+                          scale: 2,
+                          content: 'Paket Data'),
+                      PilihanButton(
+                          url: 'assets/icons/voucher.png',
+                          scale: 2,
+                          content: 'Voucher'),
+                      PilihanButton(
+                          url: 'assets/icons/e-money.png',
+                          scale: 2,
+                          content: 'E-Money'),
+                      PilihanButton(
+                        url: 'assets/icons/drop.png',
+                        scale: 2,
+                        content: 'PDAM',
+                      ),
+                      PilihanButton(
+                          url: 'assets/icons/lighting.png',
+                          scale: 2,
+                          content: 'PLN'),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15, bottom: 10),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: HomeTextStyle(
+                          size: 16,
+                          content: 'Promo',
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        children: const <Widget>[
+                          PromoWidgets(
+                            url: 'assets/images/promo-1.png',
+                          ),
+                          PromoWidgets(
+                            url: 'assets/images/promo-2.png',
+                          ),
+                          PromoWidgets(
+                            url: 'assets/images/promo-3.png',
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );

@@ -1,5 +1,6 @@
 import 'package:capstone_project/Components/appbar_primary.dart';
 import 'package:capstone_project/Components/com_helper.dart';
+import 'package:capstone_project/Components/pending.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
@@ -26,7 +27,6 @@ class ConfirmTopup extends StatefulWidget {
 }
 
 class _ConfirmTopupState extends State<ConfirmTopup> {
-  // String? method;
   @override
   Widget build(BuildContext context) {
     final getProvider = Provider.of<PaymentState>(context);
@@ -326,8 +326,9 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                               padding: EdgeInsets.symmetric(horizontal: 5)),
                           HomeTextStyle(
                             size: 16,
-                            content:
-                                getProvider.method ?? "Pilih Metode Pembayaran",
+                            content: getProvider.method == "null"
+                                ? "Pilih Metode Pembayaran"
+                                : getProvider.method,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           )
@@ -338,22 +339,48 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                   RoundedButton(
                     text: "Bayar",
                     press: () async {
+                      // var name = null;
                       final getToast = ScaffoldMessenger.of(context);
+                      final navigator = Navigator.of(context);
                       final getData = getProvider.method;
                       late var setData = PaymentModel(
                         productId: widget.id,
-                        transferMethod: getData!.toLowerCase(),
+                        transferMethod: getData.toLowerCase(),
                       );
+
                       if (getData == "Gopay") {
+                        fetchData(context);
                         final setGopay = await getProvider.gopayTopup(setData);
+                        getProvider.addMethod("null");
+                        // dismiss dialog loading
+                        navigator.pop();
+                        navigator.push(
+                          MaterialPageRoute(
+                            builder: (context) => PendingPage(
+                              va: "",
+                              status: setGopay.data!.status!,
+                            ),
+                          ),
+                        );
                         _launchInBrowser(
                           Uri.parse(setGopay.data!.actions![1].url.toString()),
                         );
                       } else if (getData == "BCA" ||
                           getData == "BNI" ||
                           getData == "BRI") {
+                        fetchData(context);
                         final setBank = await getProvider.bankTopup(setData);
-                        print(setBank.data!.vaNumber);
+                        getProvider.addMethod("null");
+                        // dismiss dialog loading
+                        navigator.pop();
+                        navigator.push(
+                          MaterialPageRoute(
+                            builder: (context) => PendingPage(
+                              va: "VA Number : ${setBank.data!.vaNumber}",
+                              status: setBank.data!.status!,
+                            ),
+                          ),
+                        );
                       } else {
                         getToast.showSnackBar(
                           toastDialog('Please choose a payment method',
