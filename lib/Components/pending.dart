@@ -1,8 +1,9 @@
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
-import 'package:capstone_project/Screens/Homepage/homepage.dart';
+import 'package:capstone_project/State/home_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PendingPage extends StatelessWidget {
   final String? va;
@@ -47,12 +48,14 @@ class PendingPage extends StatelessWidget {
               color: kPrimaryColor,
               width: size.width * 0.6,
               press: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const HomePage()),
-                  (Route<dynamic> route) => false,
-                );
+                // Navigator.pushAndRemoveUntil(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (BuildContext context) => const HomePage()),
+                //     ModalRoute.withName('/'));
+                // Navigator.restorablePopAndPushNamed(context, '/homepage');
+                Navigator.popUntil(context, (route) => route.isFirst);
+                Provider.of<HomeState>(context, listen: false).getUser();
               },
             ),
           ],

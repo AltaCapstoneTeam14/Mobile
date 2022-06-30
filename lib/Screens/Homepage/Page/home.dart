@@ -4,7 +4,6 @@ import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Screens/Homepage/Page/components/info_container.dart';
 import 'package:capstone_project/Screens/Homepage/Page/components/promo_widgets.dart';
-import 'package:capstone_project/Screens/Homepage/homepage.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/enum.dart';
 import 'package:flutter/material.dart';
@@ -59,11 +58,15 @@ class _HomeState extends State<Home> {
           behavior: MyBehavior(),
           child: RefreshIndicator(
             onRefresh: () async {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
-                (Route<dynamic> route) => false,
-              );
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute<void>(
+              //       builder: (BuildContext context) => const HomePage()),
+              //   (Route<dynamic> route) => false,
+              // );
+              // Navigator.popAndPushNamed(context, '/homepage');
+              final getState = Provider.of<HomeState>(context, listen: false);
+              getState.getUser();
             },
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
