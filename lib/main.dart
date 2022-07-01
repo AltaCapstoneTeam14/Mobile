@@ -1,11 +1,14 @@
 import 'package:capstone_project/Screens/Homepage/homepage.dart';
 import 'package:capstone_project/Screens/Login/login.dart';
+import 'package:capstone_project/Screens/Pulsa/pulsa.dart';
 import 'package:capstone_project/Screens/Register/register.dart';
 import 'package:capstone_project/Screens/Topup/topup.dart';
 import 'package:capstone_project/State/auth_provider.dart';
 import 'package:capstone_project/State/home_provider.dart';
+import 'package:capstone_project/State/operator_provider.dart';
 import 'package:capstone_project/State/pembayaran_provider.dart';
 import 'package:capstone_project/State/profile_provider.dart';
+import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:capstone_project/State/topup_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +40,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => PaymentState(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => PulsaState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OperatorState(),
+        ),
       ],
       builder: (context, child) => Consumer<AuthState>(
         builder: (context, state, child) => MaterialApp(
@@ -48,6 +57,7 @@ class MyApp extends StatelessWidget {
             '/register': (_) => const ResgisterPage(),
             '/homepage': (_) => const HomePage(),
             '/topup': (_) => const TopupPage(),
+            '/pulsa': (_) => const PulsaPage(),
           },
           home: state.isAuth
               ? const HomePage()

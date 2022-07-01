@@ -29,7 +29,7 @@ class ConfirmTopup extends StatefulWidget {
 class _ConfirmTopupState extends State<ConfirmTopup> {
   @override
   Widget build(BuildContext context) {
-    final getProvider = Provider.of<PaymentState>(context);
+    final getProvider = Provider.of<PaymentState>(context, listen: false);
 
     Future<void> _launchInBrowser(Uri url) async {
       if (!await launchUrl(

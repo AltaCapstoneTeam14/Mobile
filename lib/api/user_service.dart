@@ -25,7 +25,7 @@ class UserService {
     final myToken = pref.getString('authData');
     try {
       Response response = await _dio.get(
-        '$_baseUrl/users',
+        '$_baseUrl/users/profile',
         options: Options(
           headers: {
             'Authorization': 'Bearer $myToken',
