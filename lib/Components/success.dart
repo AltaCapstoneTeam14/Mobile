@@ -5,12 +5,10 @@ import 'package:capstone_project/State/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PendingPage extends StatelessWidget {
-  final String? va;
+class SuksesPage extends StatelessWidget {
   final String status;
-  const PendingPage({
+  const SuksesPage({
     Key? key,
-    this.va,
     required this.status,
   }) : super(key: key);
 
@@ -25,23 +23,23 @@ class PendingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              "assets/icons/pending.png",
+              "assets/icons/success.png",
               scale: 4,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: HomeTextStyle(
-                size: 16,
-                content: va!,
-                color: Colors.black,
+                size: 20,
+                content: status.toUpperCase(),
+                color: kPrimaryColor,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            HomeTextStyle(
+            const HomeTextStyle(
               size: 16,
-              content: "Status : $status",
+              content: "Silahkan Periksa Pulsa Kamu",
               color: Colors.black,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.normal,
             ),
             RoundedButton(
               text: "Kembali ke Beranda",

@@ -6,6 +6,7 @@ import 'package:capstone_project/Screens/Homepage/Page/components/info_container
 import 'package:capstone_project/Screens/Homepage/Page/components/promo_widgets.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/enum.dart';
+import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_project/Constant/color.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +33,6 @@ class _HomeState extends State<Home> {
     super.didChangeDependencies();
   }
 
-  // Future<void> refreshData() async {}
-
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeState>(
@@ -46,6 +45,7 @@ class _HomeState extends State<Home> {
                   size: widget.size,
                   balance: "100000",
                   phone: "000000000000",
+                  coin: '500',
                 ),
               ),
             ],
@@ -58,13 +58,6 @@ class _HomeState extends State<Home> {
           behavior: MyBehavior(),
           child: RefreshIndicator(
             onRefresh: () async {
-              // Navigator.pushAndRemoveUntil(
-              //   context,
-              //   MaterialPageRoute<void>(
-              //       builder: (BuildContext context) => const HomePage()),
-              //   (Route<dynamic> route) => false,
-              // );
-              // Navigator.popAndPushNamed(context, '/homepage');
               final getState = Provider.of<HomeState>(context, listen: false);
               getState.getUser();
             },
@@ -76,6 +69,7 @@ class _HomeState extends State<Home> {
                     size: widget.size,
                     balance: state.data.balance!.amount.toString(),
                     phone: state.data.phone.toString(),
+                    coin: state.data.coin!.amount.toString(),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 15)),
                   FiturButton(size: widget.size),
@@ -94,32 +88,48 @@ class _HomeState extends State<Home> {
                     crossAxisCount: 3,
                     shrinkWrap: true,
                     childAspectRatio: 1.2,
-                    children: const <Widget>[
+                    children: <Widget>[
                       PilihanButton(
-                          url: 'assets/icons/icon-pulsa.png',
-                          scale: 2,
-                          content: 'Pulsa'),
+                        url: 'assets/icons/icon-pulsa.png',
+                        scale: 2,
+                        content: 'Pulsa',
+                        onTap: () {
+                          final getState =
+                              Provider.of<PulsaState>(context, listen: false);
+                          getState.changeState(StateType.loading);
+                          Navigator.pushNamed(context, '/pulsa');
+                        },
+                      ),
                       PilihanButton(
-                          url: 'assets/icons/paket-data.png',
-                          scale: 2,
-                          content: 'Paket Data'),
+                        url: 'assets/icons/paket-data.png',
+                        scale: 2,
+                        content: 'Paket Data',
+                        onTap: () {},
+                      ),
                       PilihanButton(
-                          url: 'assets/icons/voucher.png',
-                          scale: 2,
-                          content: 'Voucher'),
+                        url: 'assets/icons/voucher.png',
+                        scale: 2,
+                        content: 'Voucher',
+                        onTap: () {},
+                      ),
                       PilihanButton(
-                          url: 'assets/icons/e-money.png',
-                          scale: 2,
-                          content: 'E-Money'),
+                        url: 'assets/icons/e-money.png',
+                        scale: 2,
+                        content: 'E-Money',
+                        onTap: () {},
+                      ),
                       PilihanButton(
                         url: 'assets/icons/drop.png',
                         scale: 2,
                         content: 'PDAM',
+                        onTap: () {},
                       ),
                       PilihanButton(
-                          url: 'assets/icons/lighting.png',
-                          scale: 2,
-                          content: 'PLN'),
+                        url: 'assets/icons/lighting.png',
+                        scale: 2,
+                        content: 'PLN',
+                        onTap: () {},
+                      ),
                     ],
                   ),
                   const Padding(
@@ -163,6 +173,7 @@ class _HomeState extends State<Home> {
 }
 
 class PilihanButton extends StatelessWidget {
+  final VoidCallback onTap;
   final String url;
   final double scale;
   final String content;
@@ -172,22 +183,26 @@ class PilihanButton extends StatelessWidget {
     required this.url,
     required this.scale,
     required this.content,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          url,
-          scale: scale,
-        ),
-        HomeTextStyle(
-          size: 13,
-          content: content,
-          color: Colors.black,
-        ),
-      ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Image.asset(
+            url,
+            scale: scale,
+          ),
+          HomeTextStyle(
+            size: 13,
+            content: content,
+            color: Colors.black,
+          ),
+        ],
+      ),
     );
   }
 }

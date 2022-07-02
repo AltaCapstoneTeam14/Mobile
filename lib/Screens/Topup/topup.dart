@@ -109,7 +109,7 @@ class _TopupPageState extends State<TopupPage> {
                     width: size.width,
                     press: () {
                       final getToast = ScaffoldMessenger.of(context);
-                      if (optionSelected != 0) {
+                      if (optionSelected > 0) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -123,7 +123,7 @@ class _TopupPageState extends State<TopupPage> {
                       } else {
                         getToast.showSnackBar(
                           toastDialog(
-                            "Please select the transfer amount",
+                            "Please select the topup amount",
                             Colors.red,
                           ),
                         );

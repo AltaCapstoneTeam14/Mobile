@@ -32,6 +32,7 @@ class Data {
   String? email;
   String? phone;
   Balance? balance;
+  Balance? coin;
   String? createdAt;
 
   Data(
@@ -40,6 +41,7 @@ class Data {
       this.email,
       this.phone,
       this.balance,
+      this.coin,
       this.createdAt});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -49,6 +51,7 @@ class Data {
     phone = json['phone'];
     balance =
         json['balance'] != null ? Balance.fromJson(json['balance']) : null;
+    coin = json['coin'] != null ? Balance.fromJson(json['coin']) : null;
     createdAt = json['created_at'];
   }
 
@@ -60,6 +63,9 @@ class Data {
     data['phone'] = phone;
     if (balance != null) {
       data['balance'] = balance!.toJson();
+    }
+    if (coin != null) {
+      data['coin'] = coin!.toJson();
     }
     data['created_at'] = createdAt;
     return data;
