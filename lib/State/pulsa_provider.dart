@@ -17,7 +17,8 @@ class PulsaState extends ChangeNotifier {
       ? UnmodifiableListView(_data)
       : UnmodifiableListView(_data.where((value) {
           final title = value.providerName!;
-          return title.contains(_method);
+          final stock = value.stock! > 0;
+          return title.contains(_method) && stock;
         }));
 
   StateType stateType = StateType.loading;
