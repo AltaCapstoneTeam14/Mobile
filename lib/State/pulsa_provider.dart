@@ -1,6 +1,7 @@
 import 'dart:collection';
-
-import 'package:capstone_project/Model/Pulsa/pulsa_model.dart';
+import 'package:capstone_project/Model/Mvp/pulsa_model.dart';
+import 'package:capstone_project/Model/Mvp/request_transaksi.dart';
+import 'package:capstone_project/Model/Mvp/response_transaksi.dart';
 import 'package:capstone_project/State/enum.dart';
 import 'package:capstone_project/api/pulsa_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +34,6 @@ class PulsaState extends ChangeNotifier {
   }
 
   Future getData() async {
-    changeState(StateType.loading);
     try {
       final response = await pulsaService.getPulsa();
       _data = response.data!;
@@ -41,5 +41,10 @@ class PulsaState extends ChangeNotifier {
     } catch (e) {
       changeState(StateType.error);
     }
+  }
+
+  Future<ResTransaksiModel> transaksiPulsa(ReqTransaksiModel setData) async {
+    final response = await pulsaService.buyPulsa(setData);
+    return response;
   }
 }

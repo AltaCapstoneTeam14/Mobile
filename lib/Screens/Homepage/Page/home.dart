@@ -6,6 +6,7 @@ import 'package:capstone_project/Screens/Homepage/Page/components/info_container
 import 'package:capstone_project/Screens/Homepage/Page/components/promo_widgets.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/enum.dart';
+import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_project/Constant/color.dart';
 import 'package:provider/provider.dart';
@@ -93,6 +94,9 @@ class _HomeState extends State<Home> {
                         scale: 2,
                         content: 'Pulsa',
                         onTap: () {
+                          final getState =
+                              Provider.of<PulsaState>(context, listen: false);
+                          getState.changeState(StateType.loading);
                           Navigator.pushNamed(context, '/pulsa');
                         },
                       ),
