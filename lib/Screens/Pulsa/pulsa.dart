@@ -1,4 +1,4 @@
-import 'package:capstone_project/Components/appbar_secondary.dart';
+import 'package:capstone_project/Components/appbar_primary.dart';
 import 'package:capstone_project/Components/com_helper.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Components/loading_animation.dart';
@@ -60,12 +60,9 @@ class _PulsaPageState extends State<PulsaPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppbarSecondary(
-          name: "Pulsa",
-          onTap: () {
-            Navigator.pop(context);
-            Provider.of<PulsaState>(context, listen: false).addMethod('null');
-          }),
+      appBar: const AppBarPrimary(
+        content: 'Pulsa',
+      ),
       body: Consumer2<PulsaState, OperatorState>(
         builder: (context, state1, state2, child) {
           if (state1.stateType == StateType.loading) {
