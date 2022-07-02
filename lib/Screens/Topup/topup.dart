@@ -109,7 +109,7 @@ class _TopupPageState extends State<TopupPage> {
                     width: size.width,
                     press: () {
                       final getToast = ScaffoldMessenger.of(context);
-                      if (optionSelected != 0) {
+                      if (optionSelected > 0) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
