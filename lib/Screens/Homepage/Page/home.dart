@@ -6,6 +6,7 @@ import 'package:capstone_project/Screens/Homepage/Page/components/info_container
 import 'package:capstone_project/Screens/Homepage/Page/components/promo_widgets.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/enum.dart';
+import 'package:capstone_project/State/pembayaran_provider.dart';
 import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_project/Constant/color.dart';
@@ -94,9 +95,10 @@ class _HomeState extends State<Home> {
                         scale: 2,
                         content: 'Pulsa',
                         onTap: () {
-                          final getState =
-                              Provider.of<PulsaState>(context, listen: false);
-                          getState.changeState(StateType.loading);
+                          Provider.of<PulsaState>(context, listen: false)
+                              .changeState(StateType.loading);
+                          Provider.of<PulsaState>(context, listen: false)
+                              .addMethod('null');
                           Navigator.pushNamed(context, '/pulsa');
                         },
                       ),
@@ -240,6 +242,8 @@ class FiturButton extends StatelessWidget {
               scale: 2.5,
               content: 'Top Up',
               onTap: () {
+                Provider.of<PaymentState>(context, listen: false)
+                    .addMethod('null');
                 Navigator.pushNamed(context, '/topup');
               },
             ),
