@@ -13,6 +13,7 @@ class ErrorPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
             "assets/images/error.png",
