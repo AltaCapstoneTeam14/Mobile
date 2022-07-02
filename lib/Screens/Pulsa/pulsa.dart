@@ -199,8 +199,6 @@ class _PulsaPageState extends State<PulsaPage> {
                                                     state1.addMethod(
                                                         state2.data[i].name!);
                                                     checkOption(0);
-                                                    print(
-                                                        "Hasil optionSelected : $optionSelected");
                                                     Navigator.pop(context);
                                                   },
                                                   child: ListTile(
@@ -270,7 +268,6 @@ class _PulsaPageState extends State<PulsaPage> {
                                       id = state1.data[i].id;
                                       operator = state1.data[i].providerName;
                                       jenis = state1.data[i].name;
-                                      print("Hasil Id Pulsa : $id");
                                     },
                                     selected: i + 1 == optionSelected,
                                   );

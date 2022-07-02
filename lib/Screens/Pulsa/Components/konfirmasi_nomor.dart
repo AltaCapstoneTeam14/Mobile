@@ -1,19 +1,14 @@
 import 'package:capstone_project/Components/appbar_primary.dart';
 import 'package:capstone_project/Components/com_helper.dart';
-import 'package:capstone_project/Components/pending.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/success.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
 import 'package:capstone_project/Model/Mvp/request_transaksi.dart';
-import 'package:capstone_project/Model/topup/payment_request.dart';
-import 'package:capstone_project/Screens/Topup/components/bank_transfer.dart';
 import 'package:capstone_project/State/home_provider.dart';
-import 'package:capstone_project/State/pembayaran_provider.dart';
 import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmNumber extends StatefulWidget {
   final String number;
