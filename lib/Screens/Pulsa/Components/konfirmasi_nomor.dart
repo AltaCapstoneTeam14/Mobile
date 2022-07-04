@@ -229,6 +229,7 @@ class _ConfirmNumberState extends State<ConfirmNumber> {
                         MaterialPageRoute(
                           builder: (context) => SuksesPage(
                             status: setData.message!,
+                            coin: setData.data!.coinEarned.toString(),
                           ),
                         ),
                       );

@@ -78,12 +78,26 @@ class _PulsaPageState extends State<PulsaPage> {
                 width: double.infinity,
                 height: size.height * 0.89,
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Column(
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8, left: 8),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: HomeTextStyle(
+                                size: 16,
+                                content:
+                                    'Saldomu Rp. ${Provider.of<HomeState>(context, listen: false).data.balance!.amount}',
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
                           Container(
                             decoration: BoxDecoration(
                               color: const Color(0xFFE0E0E0),
@@ -252,30 +266,36 @@ class _PulsaPageState extends State<PulsaPage> {
                               ? const Center(
                                   child: Text(""),
                                 )
-                              : GridView.builder(
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 1.5,
+                              : SizedBox(
+                                  height: size.height * 0.58,
+                                  child: GridView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    physics: const ScrollPhysics(),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 1.5,
+                                    ),
+                                    shrinkWrap: true,
+                                    itemBuilder: (ctx, i) {
+                                      return ProductCardV2(
+                                        name: state1.data[i].name.toString(),
+                                        amount: state1.data[i].grossAmount
+                                            .toString(),
+                                        onTap: () {
+                                          checkOption(i + 1);
+                                          harga = state1.data[i].denom;
+                                          total = state1.data[i].grossAmount;
+                                          id = state1.data[i].id;
+                                          operator =
+                                              state1.data[i].providerName;
+                                          jenis = state1.data[i].name;
+                                        },
+                                        selected: i + 1 == optionSelected,
+                                      );
+                                    },
+                                    itemCount: state1.data.length,
                                   ),
-                                  shrinkWrap: true,
-                                  itemBuilder: (ctx, i) {
-                                    return ProductCardV2(
-                                      name: state1.data[i].name.toString(),
-                                      amount:
-                                          state1.data[i].grossAmount.toString(),
-                                      onTap: () {
-                                        checkOption(i + 1);
-                                        harga = state1.data[i].denom;
-                                        total = state1.data[i].grossAmount;
-                                        id = state1.data[i].id;
-                                        operator = state1.data[i].providerName;
-                                        jenis = state1.data[i].name;
-                                      },
-                                      selected: i + 1 == optionSelected,
-                                    );
-                                  },
-                                  itemCount: state1.data.length,
                                 ),
                         ],
                       ),

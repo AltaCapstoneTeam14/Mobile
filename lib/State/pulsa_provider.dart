@@ -1,5 +1,5 @@
 import 'dart:collection';
-import 'package:capstone_project/Model/Mvp/pulsa_model.dart';
+import 'package:capstone_project/Model/Mvp/pulsa_model.dart' as pulsa;
 import 'package:capstone_project/Model/Mvp/request_transaksi.dart';
 import 'package:capstone_project/Model/Mvp/response_transaksi.dart';
 import 'package:capstone_project/State/enum.dart';
@@ -12,8 +12,8 @@ class PulsaState extends ChangeNotifier {
   String _method = "null";
   String get method => _method;
 
-  late List<Data> _data = [];
-  UnmodifiableListView<Data> get data => _method == 'null'
+  late List<pulsa.Data> _data = [];
+  UnmodifiableListView<pulsa.Data> get data => _method == 'null'
       ? UnmodifiableListView(_data)
       : UnmodifiableListView(_data.where((value) {
           final title = value.providerName!;

@@ -60,7 +60,7 @@ class _TopupPageState extends State<TopupPage> {
             width: double.infinity,
             height: size.height,
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -79,26 +79,29 @@ class _TopupPageState extends State<TopupPage> {
                       ),
                       ScrollConfiguration(
                         behavior: MyBehavior(),
-                        child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
+                        child: SizedBox(
+                          height: size.height * 0.715,
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                            ),
+                            shrinkWrap: true,
+                            itemBuilder: (ctx, i) {
+                              return ProductCard(
+                                amount: state.data[i].amount.toString(),
+                                onTap: () {
+                                  checkOption(i + 1);
+                                  harga = state.data[i].amount;
+                                  total = state.data[i].grossAmount;
+                                  id = state.data[i].id;
+                                },
+                                selected: i + 1 == optionSelected,
+                                url: "assets/icons/gold-coins.png",
+                              );
+                            },
+                            itemCount: state.data.length,
                           ),
-                          shrinkWrap: true,
-                          itemBuilder: (ctx, i) {
-                            return ProductCard(
-                              amount: state.data[i].amount.toString(),
-                              onTap: () {
-                                checkOption(i + 1);
-                                harga = state.data[i].amount;
-                                total = state.data[i].grossAmount;
-                                id = state.data[i].id;
-                              },
-                              selected: i + 1 == optionSelected,
-                              url: "assets/icons/gold-coins.png",
-                            );
-                          },
-                          itemCount: state.data.length,
                         ),
                       ),
                     ],
