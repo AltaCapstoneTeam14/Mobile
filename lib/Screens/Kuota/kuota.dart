@@ -1,5 +1,4 @@
 import 'package:capstone_project/Components/appbar_primary.dart';
-import 'package:capstone_project/Components/com_helper.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Components/product_card_v2.dart';
@@ -7,29 +6,26 @@ import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/scroll_behavior.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
-import 'package:capstone_project/Screens/Pulsa/Components/konfirmasi_nomor.dart';
 import 'package:capstone_project/State/enum.dart';
 import 'package:capstone_project/State/home_provider.dart';
+import 'package:capstone_project/State/kuota_provider.dart';
 import 'package:capstone_project/State/operator_provider.dart';
-import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PulsaPage extends StatefulWidget {
-  const PulsaPage({Key? key}) : super(key: key);
+class KuotaPage extends StatefulWidget {
+  const KuotaPage({Key? key}) : super(key: key);
 
   @override
-  State<PulsaPage> createState() => _PulsaPageState();
+  State<KuotaPage> createState() => _KuotaPageState();
 }
 
-class _PulsaPageState extends State<PulsaPage> {
+class _KuotaPageState extends State<KuotaPage> {
   @override
   void didChangeDependencies() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final getState1 = Provider.of<PulsaState>(context, listen: false);
-      getState1.getData();
-      final getState2 = Provider.of<OperatorState>(context, listen: false);
-      getState2.getData();
+      Provider.of<KuotaState>(context, listen: false).getData();
+      Provider.of<OperatorState>(context, listen: false).getData();
     });
     super.didChangeDependencies();
   }
@@ -48,21 +44,14 @@ class _PulsaPageState extends State<PulsaPage> {
     });
   }
 
-  int? harga;
-  int? total;
-  int? id;
-  String? number;
-  String? operator;
-  String? jenis;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const AppBarPrimary(
-        content: 'Pulsa',
+        content: 'Kuota',
       ),
-      body: Consumer2<PulsaState, OperatorState>(
+      body: Consumer2<KuotaState, OperatorState>(
         builder: (context, state1, state2, child) {
           if (state1.stateType == StateType.loading) {
             return const LoadingAnimation();
@@ -277,28 +266,20 @@ class _PulsaPageState extends State<PulsaPage> {
                                 )
                               : SizedBox(
                                   height: size.height * 0.58,
-                                  child: GridView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    physics: const ScrollPhysics(),
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 1.5,
-                                    ),
-                                    shrinkWrap: true,
+                                  child: ListView.builder(
                                     itemBuilder: (ctx, i) {
                                       return ProductCardV2(
-                                        name: state1.data[i].name.toString(),
                                         amount:
-                                            "Rp. ${state1.data[i].grossAmount}",
+                                            "${state1.data[i].description} \nRp. ${state1.data[i].grossAmount}",
+                                        name: state1.data[i].name!,
                                         onTap: () {
                                           checkOption(i + 1);
-                                          harga = state1.data[i].denom;
-                                          total = state1.data[i].grossAmount;
-                                          id = state1.data[i].id;
-                                          operator =
-                                              state1.data[i].providerName;
-                                          jenis = state1.data[i].name;
+                                          // harga = state1.data[i].denom;
+                                          // total = state1.data[i].grossAmount;
+                                          // id = state1.data[i].id;
+                                          // operator =
+                                          //     state1.data[i].providerName;
+                                          // jenis = state1.data[i].name;
                                         },
                                         selected: i + 1 == optionSelected,
                                       );
@@ -312,54 +293,7 @@ class _PulsaPageState extends State<PulsaPage> {
                         text: "Lanjut",
                         color: kPrimaryColor,
                         width: size.width,
-                        press: () {
-                          final getBalance =
-                              Provider.of<HomeState>(context, listen: false);
-                          final getToast = ScaffoldMessenger.of(context);
-                          number = _controller.text;
-
-                          if (optionSelected > 0) {
-                            if (number!.isEmpty) {
-                              getToast.showSnackBar(
-                                toastDialog(
-                                  "please enter phone number",
-                                  Colors.red,
-                                ),
-                              );
-                            } else {
-                              if (total! >
-                                  getBalance.data.balance!.amount!.toInt()) {
-                                getToast.showSnackBar(
-                                  toastDialog(
-                                    "Your balance is not enough",
-                                    Colors.red,
-                                  ),
-                                );
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ConfirmNumber(
-                                      amount: harga!,
-                                      grossAmount: total!,
-                                      id: id!,
-                                      jenis: jenis!,
-                                      number: number!,
-                                      operator: operator!,
-                                    ),
-                                  ),
-                                );
-                              }
-                            }
-                          } else {
-                            getToast.showSnackBar(
-                              toastDialog(
-                                "Please select the pulsa amount",
-                                Colors.red,
-                              ),
-                            );
-                          }
-                        },
+                        press: () {},
                       ),
                     ],
                   ),

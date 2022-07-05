@@ -42,7 +42,7 @@ class ProductCardV2 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10, top: 8),
                 child: HomeTextStyle(
                   size: 18,
                   content: name,
@@ -54,7 +54,7 @@ class ProductCardV2 extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8, left: 10),
                 child: HomeTextStyle(
                   size: 14,
-                  content: "Rp. $amount",
+                  content: amount,
                   color: Colors.white,
                   fontWeight: FontWeight.normal,
                 ),
