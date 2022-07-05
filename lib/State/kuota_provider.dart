@@ -1,19 +1,19 @@
 import 'dart:collection';
-import 'package:capstone_project/Model/Mvp/pulsa_model.dart' as pulsa;
+import 'package:capstone_project/Model/Mvp/kuota_model.dart' as kuota;
 import 'package:capstone_project/Model/Mvp/request_transaksi.dart';
 import 'package:capstone_project/Model/Mvp/response_transaksi.dart';
 import 'package:capstone_project/State/enum.dart';
-import 'package:capstone_project/api/pulsa_service.dart';
+import 'package:capstone_project/api/kuota_service.dart';
 import 'package:flutter/cupertino.dart';
 
-class PulsaState extends ChangeNotifier {
-  PulsaService pulsaService = PulsaService();
+class KuotaState extends ChangeNotifier {
+  KuotaService kuotaService = KuotaService();
 
   String _method = "null";
   String get method => _method;
 
-  late List<pulsa.Data> _data = [];
-  UnmodifiableListView<pulsa.Data> get data => _method == 'null'
+  late List<kuota.Data> _data = [];
+  UnmodifiableListView<kuota.Data> get data => _method == 'null'
       ? UnmodifiableListView(_data)
       : UnmodifiableListView(_data.where((value) {
           final title = value.providerName!;
@@ -36,7 +36,7 @@ class PulsaState extends ChangeNotifier {
 
   Future getData() async {
     try {
-      final response = await pulsaService.getPulsa();
+      final response = await kuotaService.getKuota();
       _data = response.data!;
       changeState(StateType.success);
     } catch (e) {
@@ -45,7 +45,7 @@ class PulsaState extends ChangeNotifier {
   }
 
   Future<ResTransaksiModel> transaksiPulsa(ReqTransaksiModel setData) async {
-    final response = await pulsaService.buyPulsa(setData);
+    final response = await kuotaService.buyKuota(setData);
     return response;
   }
 }

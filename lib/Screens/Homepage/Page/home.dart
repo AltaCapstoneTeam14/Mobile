@@ -6,6 +6,7 @@ import 'package:capstone_project/Screens/Homepage/Page/components/info_container
 import 'package:capstone_project/Screens/Homepage/Page/components/promo_widgets.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/enum.dart';
+import 'package:capstone_project/State/kuota_provider.dart';
 import 'package:capstone_project/State/pembayaran_provider.dart';
 import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:flutter/material.dart';
@@ -95,18 +96,26 @@ class _HomeState extends State<Home> {
                         scale: 2,
                         content: 'Pulsa',
                         onTap: () {
-                          Provider.of<PulsaState>(context, listen: false)
-                              .changeState(StateType.loading);
-                          Provider.of<PulsaState>(context, listen: false)
-                              .addMethod('null');
+                          final getPulsa =
+                              Provider.of<PulsaState>(context, listen: false);
+                          getPulsa.changeState(StateType.loading);
+                          getPulsa.addMethod('null');
                           Navigator.pushNamed(context, '/pulsa');
                         },
+                        turn: true,
                       ),
                       PilihanButton(
                         url: 'assets/icons/paket-data.png',
                         scale: 2,
                         content: 'Paket Data',
-                        onTap: () {},
+                        onTap: () {
+                          final getKuota =
+                              Provider.of<KuotaState>(context, listen: false);
+                          getKuota.changeState(StateType.loading);
+                          getKuota.addMethod('null');
+                          Navigator.pushNamed(context, '/kuota');
+                        },
+                        turn: true,
                       ),
                       PilihanButton(
                         url: 'assets/icons/voucher.png',
@@ -179,14 +188,16 @@ class PilihanButton extends StatelessWidget {
   final String url;
   final double scale;
   final String content;
+  final bool turn;
 
-  const PilihanButton({
-    Key? key,
-    required this.url,
-    required this.scale,
-    required this.content,
-    required this.onTap,
-  }) : super(key: key);
+  const PilihanButton(
+      {Key? key,
+      required this.url,
+      required this.scale,
+      required this.content,
+      required this.onTap,
+      this.turn = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -197,6 +208,7 @@ class PilihanButton extends StatelessWidget {
           Image.asset(
             url,
             scale: scale,
+            color: turn ? null : Colors.grey.shade300,
           ),
           HomeTextStyle(
             size: 13,

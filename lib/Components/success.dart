@@ -7,9 +7,13 @@ import 'package:provider/provider.dart';
 
 class SuksesPage extends StatelessWidget {
   final String status;
+  final String coin;
+  final String jenis;
   const SuksesPage({
     Key? key,
     required this.status,
+    required this.coin,
+    required this.jenis,
   }) : super(key: key);
 
   @override
@@ -35,9 +39,30 @@ class SuksesPage extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const HomeTextStyle(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: Image.asset(
+                      'assets/icons/chinese-coin.png',
+                      scale: 25,
+                    ),
+                  ),
+                  HomeTextStyle(
+                    size: 16,
+                    content: coin,
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ],
+              ),
+            ),
+            HomeTextStyle(
               size: 16,
-              content: "Silahkan Periksa Pulsa Kamu",
+              content: "Silahkan Periksa $jenis Kamu",
               color: Colors.black,
               fontWeight: FontWeight.normal,
             ),

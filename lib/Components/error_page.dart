@@ -23,7 +23,6 @@ class ErrorPage extends StatelessWidget {
             text: "Logout",
             press: () {
               Provider.of<AuthState>(context, listen: false).logout();
-              Navigator.popAndPushNamed(context, '/login');
             },
             color: Colors.red,
             width: size.width * 0.6,
