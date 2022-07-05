@@ -5,9 +5,11 @@ import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Components/product_card_v2.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/scroll_behavior.dart';
+import 'package:capstone_project/Components/success.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
-import 'package:capstone_project/Screens/Pulsa/Components/konfirmasi_nomor.dart';
+import 'package:capstone_project/Components/konfirmasi_nomor.dart';
+import 'package:capstone_project/Model/Mvp/request_transaksi.dart';
 import 'package:capstone_project/State/enum.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/operator_provider.dart';
@@ -132,123 +134,46 @@ class _PulsaPageState extends State<PulsaPage> {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30.0),
-                                        topRight: Radius.circular(30.0),
+                                  bottomSheetPrimary(
+                                    context,
+                                    size,
+                                    "Pilih Operator Seluler",
+                                    ScrollConfiguration(
+                                      behavior: MyBehavior(),
+                                      child: SingleChildScrollView(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: SizedBox(
+                                            height: size.height * 0.41,
+                                            child: ListView.separated(
+                                              shrinkWrap: true,
+                                              itemBuilder: (ctx, i) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    state1.addMethod(
+                                                        state2.data[i].name!);
+                                                    checkOption(0);
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: ListTile(
+                                                    title: HomeTextStyle(
+                                                      size: 20,
+                                                      content:
+                                                          state2.data[i].name!,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder: (ctx, i) {
+                                                return const Divider();
+                                              },
+                                              itemCount: state2.data.length,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    backgroundColor: Colors.white,
-                                    builder: (_) {
-                                      return Column(
-                                        children: <Widget>[
-                                          Container(
-                                            decoration: const BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(30.0),
-                                                topRight: Radius.circular(30.0),
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  blurRadius: 10,
-                                                  offset: Offset(0, 3),
-                                                  color: Colors.grey,
-                                                ),
-                                              ],
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                const Divider(
-                                                  thickness: 5,
-                                                  indent: 170,
-                                                  endIndent: 170,
-                                                  color: Colors.grey,
-                                                  height: 20,
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 20,
-                                                    vertical: 10,
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      const HomeTextStyle(
-                                                        size: 16,
-                                                        content:
-                                                            "Pilih Operator Seluler",
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                      IconButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons.close_rounded,
-                                                          size: 35,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          ScrollConfiguration(
-                                            behavior: MyBehavior(),
-                                            child: SingleChildScrollView(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: SizedBox(
-                                                  height: size.height * 0.41,
-                                                  child: ListView.separated(
-                                                    shrinkWrap: true,
-                                                    itemBuilder: (ctx, i) {
-                                                      return GestureDetector(
-                                                        onTap: () {
-                                                          state1.addMethod(
-                                                              state2.data[i]
-                                                                  .name!);
-                                                          checkOption(0);
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: ListTile(
-                                                          title: HomeTextStyle(
-                                                            size: 20,
-                                                            content: state2
-                                                                .data[i].name!,
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    separatorBuilder: (ctx, i) {
-                                                      return const Divider();
-                                                    },
-                                                    itemCount:
-                                                        state2.data.length,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const Padding(
-                                              padding:
-                                                  EdgeInsets.only(top: 20)),
-                                        ],
-                                      );
-                                    },
                                   );
                                 },
                                 child: Row(
@@ -346,6 +271,33 @@ class _PulsaPageState extends State<PulsaPage> {
                                       jenis: jenis!,
                                       number: number!,
                                       operator: operator!,
+                                      onTap: () async {
+                                        final navigator = Navigator.of(context);
+                                        fetchData(context);
+
+                                        final setData =
+                                            await Provider.of<PulsaState>(
+                                                    context,
+                                                    listen: false)
+                                                .transaksiPulsa(
+                                          ReqTransaksiModel(
+                                            phone: number!,
+                                            productId: id!,
+                                          ),
+                                        );
+
+                                        navigator.pop();
+                                        navigator.push(
+                                          MaterialPageRoute(
+                                            builder: (context) => SuksesPage(
+                                              status: setData.message!,
+                                              coin: setData.data!.coinEarned
+                                                  .toString(),
+                                              jenis: 'Pulsa',
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 );

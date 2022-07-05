@@ -8,10 +8,12 @@ import 'package:provider/provider.dart';
 class SuksesPage extends StatelessWidget {
   final String status;
   final String coin;
+  final String jenis;
   const SuksesPage({
     Key? key,
     required this.status,
     required this.coin,
+    required this.jenis,
   }) : super(key: key);
 
   @override
@@ -58,9 +60,9 @@ class SuksesPage extends StatelessWidget {
                 ],
               ),
             ),
-            const HomeTextStyle(
+            HomeTextStyle(
               size: 16,
-              content: "Silahkan Periksa Pulsa Kamu",
+              content: "Silahkan Periksa $jenis Kamu",
               color: Colors.black,
               fontWeight: FontWeight.normal,
             ),

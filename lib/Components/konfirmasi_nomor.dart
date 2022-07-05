@@ -1,16 +1,13 @@
 import 'package:capstone_project/Components/appbar_primary.dart';
-import 'package:capstone_project/Components/com_helper.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
-import 'package:capstone_project/Components/success.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
-import 'package:capstone_project/Model/Mvp/request_transaksi.dart';
 import 'package:capstone_project/State/home_provider.dart';
-import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmNumber extends StatefulWidget {
+  final VoidCallback onTap;
   final String number;
   final String operator;
   final String jenis;
@@ -20,6 +17,7 @@ class ConfirmNumber extends StatefulWidget {
   const ConfirmNumber({
     Key? key,
     required this.number,
+    required this.onTap,
     required this.operator,
     required this.jenis,
     required this.amount,
@@ -209,31 +207,7 @@ class _ConfirmNumberState extends State<ConfirmNumber> {
                   ),
                   RoundedButton(
                     text: "Bayar",
-                    press: () async {
-                      final navigator = Navigator.of(context);
-                      fetchData(context);
-
-                      Provider.of<PulsaState>(context, listen: false)
-                          .addMethod("null");
-                      final setData =
-                          await Provider.of<PulsaState>(context, listen: false)
-                              .transaksiPulsa(
-                        ReqTransaksiModel(
-                          phone: widget.number,
-                          productId: widget.id,
-                        ),
-                      );
-
-                      navigator.pop();
-                      navigator.push(
-                        MaterialPageRoute(
-                          builder: (context) => SuksesPage(
-                            status: setData.message!,
-                            coin: setData.data!.coinEarned.toString(),
-                          ),
-                        ),
-                      );
-                    },
+                    press: widget.onTap,
                     color: kPrimaryColor,
                     width: size.width * 0.9,
                   ),
