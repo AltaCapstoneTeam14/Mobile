@@ -1,4 +1,5 @@
 import 'package:capstone_project/Constant/base_url.dart';
+import 'package:capstone_project/Model/userdata/history_model.dart';
 import 'package:capstone_project/Model/userdata/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +34,25 @@ class UserService {
         ),
       );
       final getData = UserModel.fromJson(response.data);
+      return getData;
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<HistoryModel> getHistory() async {
+    final pref = await SharedPreferences.getInstance();
+    final myToken = pref.getString('authData');
+    try {
+      Response response = await _dio.get(
+        '$baseUrl/transaction-history',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $myToken',
+          },
+        ),
+      );
+      final getData = HistoryModel.fromJson(response.data);
       return getData;
     } on DioError catch (e) {
       throw Exception(e);

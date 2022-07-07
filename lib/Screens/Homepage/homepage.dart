@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final page = [
-      const History(),
+      const Riwayat(),
       Home(size: size),
       const Profile(),
     ];
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
           "Profile",
         ],
         icons: const [
-          Icons.history,
+          Icons.history_rounded,
           Icons.home,
           Icons.people_alt,
         ],

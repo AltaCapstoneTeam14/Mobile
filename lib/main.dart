@@ -7,6 +7,7 @@ import 'package:capstone_project/Screens/Register/register.dart';
 import 'package:capstone_project/Screens/Topup/topup.dart';
 import 'package:capstone_project/State/auth_provider.dart';
 import 'package:capstone_project/State/cashout_state.dart';
+import 'package:capstone_project/State/history_provider.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/kuota_provider.dart';
 import 'package:capstone_project/State/operator_provider.dart';
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => CashoutState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HistoryState(),
         ),
       ],
       builder: (context, child) => Consumer<AuthState>(
