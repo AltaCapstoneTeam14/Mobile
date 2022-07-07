@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final String amount;
+  final double scale;
   final String url;
   final VoidCallback onTap;
   final bool selected;
   const ProductCard({
     Key? key,
     required this.amount,
+    this.scale = 1,
     required this.url,
     required this.onTap,
     required this.selected,
@@ -33,6 +35,7 @@ class ProductCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
+              scale: scale,
               image: AssetImage(url),
               alignment: Alignment.topCenter,
             ),
@@ -43,7 +46,7 @@ class ProductCard extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 5),
               child: HomeTextStyle(
                 size: 14,
-                content: "Rp $amount",
+                content: "Rp. $amount",
                 color: Colors.black,
                 fontWeight: FontWeight.w500,
               ),

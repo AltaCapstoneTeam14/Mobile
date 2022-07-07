@@ -269,7 +269,9 @@ class FiturButton extends StatelessWidget {
               urlIcon: 'assets/icons/cashout.png',
               scale: 3,
               content: 'Cashout',
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/cashout');
+              },
             ),
           ],
         ),

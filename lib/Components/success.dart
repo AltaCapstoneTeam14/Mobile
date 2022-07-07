@@ -32,11 +32,14 @@ class SuksesPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: HomeTextStyle(
-                size: 20,
-                content: status.toUpperCase(),
-                color: kPrimaryColor,
-                fontWeight: FontWeight.w500,
+              child: Align(
+                alignment: Alignment.center,
+                child: HomeTextStyle(
+                  size: 20,
+                  content: status.toUpperCase(),
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             Padding(
