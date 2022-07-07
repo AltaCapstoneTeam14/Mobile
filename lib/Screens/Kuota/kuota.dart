@@ -240,55 +240,65 @@ class _KuotaPageState extends State<KuotaPage> {
                                 ),
                               );
                             } else {
-                              if (total! >
-                                  getBalance.data.balance!.amount!.toInt()) {
+                              if (number!.length < 10 || number!.length > 14) {
                                 getToast.showSnackBar(
                                   toastDialog(
-                                    "Your balance is not enough",
+                                    "The length of phone must be between 10 and 14 characters",
                                     Colors.red,
                                   ),
                                 );
                               } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ConfirmNumber(
-                                      amount: total!,
-                                      grossAmount: total!,
-                                      id: id!,
-                                      jenis: jenis!,
-                                      number: number!,
-                                      operator: operator!,
-                                      onTap: () async {
-                                        final navigator = Navigator.of(context);
-                                        fetchData(context);
-
-                                        final setData =
-                                            await Provider.of<KuotaState>(
-                                                    context,
-                                                    listen: false)
-                                                .transaksiPulsa(
-                                          ReqTransaksiModel(
-                                            phone: number!,
-                                            productId: id!,
-                                          ),
-                                        );
-
-                                        navigator.pop();
-                                        navigator.push(
-                                          MaterialPageRoute(
-                                            builder: (context) => SuksesPage(
-                                              status: setData.message!,
-                                              coin: setData.data!.coinEarned
-                                                  .toString(),
-                                              jenis: 'Kuota',
-                                            ),
-                                          ),
-                                        );
-                                      },
+                                if (total! >
+                                    getBalance.data.balance!.amount!.toInt()) {
+                                  getToast.showSnackBar(
+                                    toastDialog(
+                                      "Your balance is not enough",
+                                      Colors.red,
                                     ),
-                                  ),
-                                );
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ConfirmNumber(
+                                        amount: total!,
+                                        grossAmount: total!,
+                                        id: id!,
+                                        jenis: jenis!,
+                                        number: number!,
+                                        operator: operator!,
+                                        onTap: () async {
+                                          final navigator =
+                                              Navigator.of(context);
+                                          fetchData(context);
+
+                                          final setData =
+                                              await Provider.of<KuotaState>(
+                                                      context,
+                                                      listen: false)
+                                                  .transaksiPulsa(
+                                            ReqTransaksiModel(
+                                              phone: number!,
+                                              productId: id!,
+                                            ),
+                                          );
+
+                                          navigator.pop();
+                                          navigator.push(
+                                            MaterialPageRoute(
+                                              builder: (context) => SuksesPage(
+                                                status: setData.message!,
+                                                coin: setData.data!.coinEarned
+                                                    .toString(),
+                                                jenis: 'Kuota',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                }
                               }
                             }
                           } else {

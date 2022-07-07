@@ -40,7 +40,6 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
       }
     }
 
-    // String realMethod = getProvider.method!;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const AppBarPrimary(
@@ -75,7 +74,7 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                         ),
                         HomeTextStyle(
                           size: 24,
-                          content: 'Rp ${widget.amount}',
+                          content: 'Rp. ${widget.amount}',
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
@@ -111,7 +110,7 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                             ),
                             HomeTextStyle(
                               size: 13,
-                              content: 'Rp ${widget.amount}',
+                              content: 'Rp. ${widget.amount}',
                               color: Colors.black,
                             ),
                           ],
@@ -127,7 +126,7 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                             HomeTextStyle(
                               size: 13,
                               content:
-                                  'Rp ${widget.grossAmount - widget.amount}',
+                                  'Rp. ${widget.grossAmount - widget.amount}',
                               color: Colors.black,
                             ),
                           ],
@@ -148,7 +147,7 @@ class _ConfirmTopupState extends State<ConfirmTopup> {
                         ),
                         HomeTextStyle(
                           size: 13,
-                          content: 'Rp ${widget.grossAmount}',
+                          content: 'Rp. ${widget.grossAmount}',
                           color: Colors.black,
                         ),
                       ],

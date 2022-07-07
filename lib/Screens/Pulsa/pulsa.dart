@@ -252,55 +252,65 @@ class _PulsaPageState extends State<PulsaPage> {
                                 ),
                               );
                             } else {
-                              if (total! >
-                                  getBalance.data.balance!.amount!.toInt()) {
+                              if (number!.length < 10 || number!.length > 14) {
                                 getToast.showSnackBar(
                                   toastDialog(
-                                    "Your balance is not enough",
+                                    "The length of phone must be between 10 and 14 characters",
                                     Colors.red,
                                   ),
                                 );
                               } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ConfirmNumber(
-                                      amount: harga!,
-                                      grossAmount: total!,
-                                      id: id!,
-                                      jenis: jenis!,
-                                      number: number!,
-                                      operator: operator!,
-                                      onTap: () async {
-                                        final navigator = Navigator.of(context);
-                                        fetchData(context);
-
-                                        final setData =
-                                            await Provider.of<PulsaState>(
-                                                    context,
-                                                    listen: false)
-                                                .transaksiPulsa(
-                                          ReqTransaksiModel(
-                                            phone: number!,
-                                            productId: id!,
-                                          ),
-                                        );
-
-                                        navigator.pop();
-                                        navigator.push(
-                                          MaterialPageRoute(
-                                            builder: (context) => SuksesPage(
-                                              status: setData.message!,
-                                              coin: setData.data!.coinEarned
-                                                  .toString(),
-                                              jenis: 'Pulsa',
-                                            ),
-                                          ),
-                                        );
-                                      },
+                                if (total! >
+                                    getBalance.data.balance!.amount!.toInt()) {
+                                  getToast.showSnackBar(
+                                    toastDialog(
+                                      "Your balance is not enough",
+                                      Colors.red,
                                     ),
-                                  ),
-                                );
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ConfirmNumber(
+                                        amount: harga!,
+                                        grossAmount: total!,
+                                        id: id!,
+                                        jenis: jenis!,
+                                        number: number!,
+                                        operator: operator!,
+                                        onTap: () async {
+                                          final navigator =
+                                              Navigator.of(context);
+                                          fetchData(context);
+
+                                          final setData =
+                                              await Provider.of<PulsaState>(
+                                                      context,
+                                                      listen: false)
+                                                  .transaksiPulsa(
+                                            ReqTransaksiModel(
+                                              phone: number!,
+                                              productId: id!,
+                                            ),
+                                          );
+
+                                          navigator.pop();
+                                          navigator.push(
+                                            MaterialPageRoute(
+                                              builder: (context) => SuksesPage(
+                                                status: setData.message!,
+                                                coin: setData.data!.coinEarned
+                                                    .toString(),
+                                                jenis: 'Pulsa',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                }
                               }
                             }
                           } else {
