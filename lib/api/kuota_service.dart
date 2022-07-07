@@ -1,3 +1,4 @@
+import 'package:capstone_project/Constant/base_url.dart';
 import 'package:capstone_project/Model/Mvp/kuota_model.dart';
 import 'package:capstone_project/Model/Mvp/request_transaksi.dart';
 import 'package:capstone_project/Model/Mvp/response_transaksi.dart';
@@ -6,14 +7,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class KuotaService {
   final _dio = Dio();
-  final _baseUrl = "http://44.201.153.46:8081/api-dev/v1";
 
   Future<KuotaModel> getKuota() async {
     final pref = await SharedPreferences.getInstance();
     final myToken = pref.getString('authData');
     try {
       Response response = await _dio.get(
-        '$_baseUrl/products/quota',
+        '$baseUrl/products/quota',
         options: Options(
           headers: {
             'Authorization': 'Bearer $myToken',
@@ -32,7 +32,7 @@ class KuotaService {
     final myToken = pref.getString('authData');
     try {
       Response response = await _dio.post(
-        '$_baseUrl/transactions/quota',
+        '$baseUrl/transactions/quota',
         data: {
           "product_id": setData.productId,
           "phone": setData.phone,

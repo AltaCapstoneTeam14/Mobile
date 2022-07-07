@@ -90,7 +90,7 @@ class _KuotaPageState extends State<KuotaPage> {
                               child: HomeTextStyle(
                                 size: 16,
                                 content:
-                                    'Saldomu Rp. ${Provider.of<HomeState>(context, listen: false).data.balance!.amount}',
+                                    'Saldomu Rp ${Provider.of<HomeState>(context, listen: false).data.balance!.amount}',
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -203,7 +203,7 @@ class _KuotaPageState extends State<KuotaPage> {
                                     itemBuilder: (ctx, i) {
                                       return ProductCardV2(
                                         amount:
-                                            "${state1.data[i].description} \nRp. ${state1.data[i].grossAmount}",
+                                            "${state1.data[i].description} \nRp ${state1.data[i].grossAmount}",
                                         name: state1.data[i].name!,
                                         onTap: () {
                                           checkOption(i + 1);
