@@ -93,7 +93,7 @@ class _PulsaPageState extends State<PulsaPage> {
                               child: HomeTextStyle(
                                 size: 16,
                                 content:
-                                    'Saldomu Rp. ${Provider.of<HomeState>(context, listen: false).data.balance!.amount}',
+                                    'Saldomu Rp ${Provider.of<HomeState>(context, listen: false).data.balance!.amount}',
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -215,7 +215,7 @@ class _PulsaPageState extends State<PulsaPage> {
                                       return ProductCardV2(
                                         name: state1.data[i].name.toString(),
                                         amount:
-                                            "Rp. ${state1.data[i].grossAmount}",
+                                            "Rp ${state1.data[i].grossAmount}",
                                         onTap: () {
                                           checkOption(i + 1);
                                           harga = state1.data[i].denom;

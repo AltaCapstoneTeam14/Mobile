@@ -1,10 +1,10 @@
+import 'package:capstone_project/Constant/base_url.dart';
 import 'package:capstone_project/Model/userdata/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
   final _dio = Dio();
-  final _baseUrl = "http://44.201.153.46:8081/api-dev/v1";
 
   UserService() {
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
@@ -25,7 +25,7 @@ class UserService {
     final myToken = pref.getString('authData');
     try {
       Response response = await _dio.get(
-        '$_baseUrl/users/profile',
+        '$baseUrl/users/profile',
         options: Options(
           headers: {
             'Authorization': 'Bearer $myToken',

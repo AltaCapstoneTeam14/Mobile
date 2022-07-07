@@ -199,7 +199,7 @@ class _ConfirmNumberState extends State<ConfirmNumber> {
                       child: HomeTextStyle(
                         size: 16,
                         content:
-                            "Saldo Kamu - Rp. ${getProvider.data.balance!.amount}",
+                            "Saldo Kamu - Rp ${getProvider.data.balance!.amount}",
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),

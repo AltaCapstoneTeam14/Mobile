@@ -1,3 +1,4 @@
+import 'package:capstone_project/Constant/base_url.dart';
 import 'package:capstone_project/Model/Login/Request/login_model.dart';
 import 'package:capstone_project/Model/Login/Response/login_response.dart';
 import 'package:capstone_project/Model/Register/Request/register_model.dart';
@@ -6,12 +7,11 @@ import 'package:dio/dio.dart';
 
 class AuthService {
   final _dio = Dio();
-  final _baseUrl = "http://44.201.153.46:8081/api-dev/v1";
 
   Future register(RegisterModel pModel) async {
     try {
       Response response = await _dio.post(
-        '$_baseUrl/auth/register',
+        '$baseUrl/auth/register',
         data: {
           'name': pModel.name,
           'email': pModel.email,
@@ -34,7 +34,7 @@ class AuthService {
   Future<LoginResponse?> login(LoginModel lModel) async {
     try {
       Response response = await _dio.post(
-        '$_baseUrl/auth/login',
+        '$baseUrl/auth/login',
         data: {
           'email': lModel.email,
           'password': lModel.password,
