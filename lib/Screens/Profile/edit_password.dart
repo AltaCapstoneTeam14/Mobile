@@ -63,26 +63,27 @@ class _EditPassPageState extends State<EditPassPage> {
                         if (passwd != cpasswd) {
                           getToast.showSnackBar(toastDialog(
                               'Password is not same', Colors.redAccent));
-                        }
-                        fetchData(context);
-                        final navigator = Navigator.of(context);
-                        final getRespon = await state.changePass(
-                          ReqEditPassModel(
-                            password: passwd,
-                          ),
-                        );
-                        if (getRespon.code == '201') {
-                          getToast.showSnackBar(
-                              toastDialog(getRespon.message!, Colors.green));
                         } else {
-                          getToast.showSnackBar(
-                              toastDialog(getRespon.message!, Colors.red));
+                          fetchData(context);
+                          final navigator = Navigator.of(context);
+                          final getRespon = await state.changePass(
+                            ReqEditPassModel(
+                              password: passwd,
+                            ),
+                          );
+                          if (getRespon.code == '201') {
+                            getToast.showSnackBar(
+                                toastDialog(getRespon.message!, Colors.green));
+                          } else {
+                            getToast.showSnackBar(
+                                toastDialog(getRespon.message!, Colors.red));
+                          }
+                          // dismiss dialog loading
+                          navigator.pop();
+                          // Go to page login
+                          navigator.pop();
+                          state.getUser();
                         }
-                        // dismiss dialog loading
-                        navigator.pop();
-                        // Go to page login
-                        navigator.pop();
-                        state.getUser();
                       }
                     },
                     color: kPrimaryColor,
