@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppbarSecondary extends StatelessWidget implements PreferredSizeWidget {
-  final String name;
-  final VoidCallback onTap;
+  final String content;
   const AppbarSecondary({
     Key? key,
-    required this.name,
-    required this.onTap,
+    required this.content,
   }) : super(key: key);
 
   @override
@@ -16,20 +14,15 @@ class AppbarSecondary extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       titleTextStyle: const TextStyle(
-        fontFamily: 'Poppins',
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: Colors.black,
-      ),
+          fontFamily: 'Poppins',
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          color: Colors.white),
       iconTheme: const IconThemeData(
-        color: Colors.black,
+        color: Colors.white,
         size: 32,
       ),
-      leading: IconButton(
-        onPressed: onTap,
-        icon: const Icon(Icons.arrow_back),
-      ),
-      title: Text(name),
+      title: Text(content),
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,

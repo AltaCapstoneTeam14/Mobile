@@ -124,58 +124,58 @@ class _PulsaPageState extends State<PulsaPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10, top: 20),
-                            child: Container(
-                              width: size.width,
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom:
-                                      BorderSide(width: 2, color: Colors.grey),
-                                ),
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  bottomSheetPrimary(
-                                    context,
-                                    size,
-                                    "Pilih Operator Seluler",
-                                    ScrollConfiguration(
-                                      behavior: MyBehavior(),
-                                      child: SingleChildScrollView(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: SizedBox(
-                                            height: size.height * 0.41,
-                                            child: ListView.separated(
-                                              shrinkWrap: true,
-                                              itemBuilder: (ctx, i) {
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    state1.addMethod(
-                                                        state2.data[i].name!);
-                                                    checkOption(0);
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: ListTile(
-                                                    title: HomeTextStyle(
-                                                      size: 20,
-                                                      content:
-                                                          state2.data[i].name!,
-                                                      color: Colors.black,
-                                                    ),
+                            child: GestureDetector(
+                              onTap: () {
+                                bottomSheetPrimary(
+                                  context,
+                                  size,
+                                  "Pilih Operator Seluler",
+                                  ScrollConfiguration(
+                                    behavior: MyBehavior(),
+                                    child: SingleChildScrollView(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: SizedBox(
+                                          height: size.height * 0.41,
+                                          child: ListView.separated(
+                                            shrinkWrap: true,
+                                            itemBuilder: (ctx, i) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  state1.addMethod(
+                                                      state2.data[i].name!);
+                                                  checkOption(0);
+                                                  Navigator.pop(context);
+                                                },
+                                                child: ListTile(
+                                                  title: HomeTextStyle(
+                                                    size: 20,
+                                                    content:
+                                                        state2.data[i].name!,
+                                                    color: Colors.black,
                                                   ),
-                                                );
-                                              },
-                                              separatorBuilder: (ctx, i) {
-                                                return const Divider();
-                                              },
-                                              itemCount: state2.data.length,
-                                            ),
+                                                ),
+                                              );
+                                            },
+                                            separatorBuilder: (ctx, i) {
+                                              return const Divider();
+                                            },
+                                            itemCount: state2.data.length,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  );
-                                },
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: size.width,
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        width: 2, color: Colors.grey),
+                                  ),
+                                ),
                                 child: Row(
                                   children: [
                                     const Icon(Icons.more_horiz_rounded),
