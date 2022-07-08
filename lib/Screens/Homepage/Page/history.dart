@@ -37,57 +37,67 @@ class _RiwayatState extends State<Riwayat> {
         }
         return ScrollConfiguration(
           behavior: MyBehavior(),
-          child: ListView.separated(
-            itemBuilder: (ctx, i) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailHistoryPage(
-                        date: state.data[i].dateString!,
-                        orderId: state.data[i].orderId!,
-                        status: state.data[i].status!,
-                        productType: state.data[i].productType!,
-                        name: state.data[i].name!,
-                        grossAmount: state.data[i].grossAmount!.toString(),
-                        paymentMethod: state.data[i].transferMethod!,
+          child: state.data.isEmpty
+              ? const Center(
+                  child: HomeTextStyle(
+                    size: 16,
+                    content: "Belum ada riwayat",
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                  ),
+                )
+              : ListView.separated(
+                  itemBuilder: (ctx, i) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailHistoryPage(
+                              date: state.data[i].dateString!,
+                              orderId: state.data[i].orderId!,
+                              status: state.data[i].status!,
+                              productType: state.data[i].productType!,
+                              name: state.data[i].name!,
+                              grossAmount:
+                                  state.data[i].grossAmount!.toString(),
+                              paymentMethod: state.data[i].transferMethod!,
+                            ),
+                          ),
+                        );
+                      },
+                      child: ListTile(
+                        leading: state.data[i].productType! == "pulsa"
+                            ? Image.asset("assets/icons/icon-pulsa.png")
+                            : state.data[i].productType! == "quota"
+                                ? Image.asset("assets/icons/paket-data.png")
+                                : Image.asset("assets/icons/plus.png"),
+                        title: HomeTextStyle(
+                          size: 16,
+                          content: state.data[i].productType!.toUpperCase(),
+                          color: Colors.black,
+                        ),
+                        subtitle: HomeTextStyle(
+                          size: 12,
+                          content: state.data[i].dateString!,
+                          color: Colors.black,
+                        ),
+                        trailing: HomeTextStyle(
+                          size: 16,
+                          content: state.data[i].productType! == "pulsa" ||
+                                  state.data[i].productType! == "quota"
+                              ? "- Rp ${state.data[i].grossAmount!.toString()}"
+                              : "+ Rp ${state.data[i].grossAmount!.toString()}",
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  );
-                },
-                child: ListTile(
-                  leading: state.data[i].productType! == "pulsa"
-                      ? Image.asset("assets/icons/icon-pulsa.png")
-                      : state.data[i].productType! == "quota"
-                          ? Image.asset("assets/icons/paket-data.png")
-                          : Image.asset("assets/icons/plus.png"),
-                  title: HomeTextStyle(
-                    size: 16,
-                    content: state.data[i].productType!.toUpperCase(),
-                    color: Colors.black,
-                  ),
-                  subtitle: HomeTextStyle(
-                    size: 12,
-                    content: state.data[i].dateString!,
-                    color: Colors.black,
-                  ),
-                  trailing: HomeTextStyle(
-                    size: 16,
-                    content: state.data[i].productType! == "pulsa" ||
-                            state.data[i].productType! == "quota"
-                        ? "- Rp ${state.data[i].grossAmount!.toString()}"
-                        : "+ Rp ${state.data[i].grossAmount!.toString()}",
-                    color: Colors.black,
-                  ),
+                    );
+                  },
+                  separatorBuilder: (ctx, i) {
+                    return const Divider();
+                  },
+                  itemCount: state.data.length,
                 ),
-              );
-            },
-            separatorBuilder: (ctx, i) {
-              return const Divider();
-            },
-            itemCount: state.data.length,
-          ),
         );
       },
     );

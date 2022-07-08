@@ -36,6 +36,7 @@ Future<dynamic> bottomSheetPrimary(
     backgroundColor: Colors.white,
     builder: (_) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
             decoration: const BoxDecoration(

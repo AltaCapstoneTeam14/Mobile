@@ -213,7 +213,7 @@ class PilihanButton extends StatelessWidget {
           HomeTextStyle(
             size: 13,
             content: content,
-            color: Colors.black,
+            color: turn ? Colors.black : Colors.grey.shade400,
           ),
         ],
       ),
@@ -258,12 +258,6 @@ class FiturButton extends StatelessWidget {
                     .addMethod('null');
                 Navigator.pushNamed(context, '/topup');
               },
-            ),
-            HomeFitur(
-              urlIcon: 'assets/icons/transfer.png',
-              scale: 2.8,
-              content: 'Transfer',
-              onTap: () {},
             ),
             HomeFitur(
               urlIcon: 'assets/icons/cashout.png',
