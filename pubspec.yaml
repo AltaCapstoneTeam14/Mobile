@@ -43,6 +43,7 @@ dependencies:
   provider: ^6.0.3
   path_provider: ^2.0.11
   shared_preferences: ^2.0.15
+  flutter_launcher_icons: ^0.9.3
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,13 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.1.11
   json_serializable: ^6.2.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/logo_apps.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icons/logo_apps.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
