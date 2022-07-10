@@ -6,8 +6,8 @@ class BackgroundPrimary extends StatelessWidget {
   final Widget child;
   const BackgroundPrimary({
     Key? key,
-    required this.child,
     required this.appBar,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -35,10 +35,11 @@ class BackgroundPrimary extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              bottom: size.height * 0.37,
-              child: child,
-            ),
+            // Positioned(
+            //   bottom: size.height * 0.37,
+            //   child: child,
+            // ),
+            child,
           ],
         ),
       ),

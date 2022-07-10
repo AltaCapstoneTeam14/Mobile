@@ -247,7 +247,9 @@ class FiturButton extends StatelessWidget {
               urlIcon: 'assets/icons/planner.png',
               scale: 3,
               content: 'Daily Quest',
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/daily');
+              },
             ),
             HomeFitur(
               urlIcon: 'assets/icons/topup.png',

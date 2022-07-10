@@ -1,4 +1,5 @@
 import 'package:capstone_project/Screens/Cashout/cashout.dart';
+import 'package:capstone_project/Screens/Daily%20Quest/daily_quest.dart';
 import 'package:capstone_project/Screens/Homepage/homepage.dart';
 import 'package:capstone_project/Screens/Kuota/kuota.dart';
 import 'package:capstone_project/Screens/Login/login.dart';
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
             '/pulsa': (_) => const PulsaPage(),
             '/kuota': (_) => const KuotaPage(),
             '/cashout': (_) => const CashoutPage(),
+            '/daily': (_) => const DailyPage(),
           },
           home: state.isAuth
               ? const HomePage()
