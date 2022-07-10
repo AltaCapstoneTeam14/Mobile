@@ -97,29 +97,42 @@ class _DailyPageState extends State<DailyPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HomeTextStyle(
-                        size: 16,
-                        content:
-                            "Claim ${state.data.loginCount} Day(s) in a Week",
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: HomeTextStyle(
+                          size: 16,
+                          content:
+                              "Claim ${state.data.loginCount} Day(s) this week",
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       GridView.builder(
+                        padding: EdgeInsets.zero,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 7,
+                          childAspectRatio: 0.8,
                         ),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (ctx, i) {
-                          return GridTile(
-                            footer: Text(index[i]),
-                            child: Icon(
-                              Icons.attach_money_outlined,
-                              color: state.data.status! == 'claimed' &&
-                                      i < state.data.loginCount!
-                                  ? Colors.yellow.shade700
-                                  : Colors.grey,
-                            ),
+                          return Column(
+                            children: [
+                              Icon(
+                                Icons.money_rounded,
+                                size: 40,
+                                color: state.data.status! == 'claimed' &&
+                                        i < state.data.loginCount!
+                                    ? Colors.yellow.shade700
+                                    : Colors.grey,
+                              ),
+                              HomeTextStyle(
+                                size: 12,
+                                content: index[i],
+                                color: Colors.black,
+                              )
+                            ],
                           );
                         },
                         itemCount: index.length,
@@ -133,6 +146,43 @@ class _DailyPageState extends State<DailyPage> {
                 text: 'Claim',
                 press: () {
                   state.claimCoin();
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (_) {
+                      return Dialog(
+                        // The background color
+                        backgroundColor: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              // The loading indicator
+                              Icon(
+                                Icons.money_rounded,
+                                color: Colors.yellow.shade700,
+                                size: 100,
+                              ),
+                              const HomeTextStyle(
+                                size: 20,
+                                content: 'You Get 100 Coin',
+                                color: Colors.black,
+                              ),
+                              RoundedButton(
+                                text: 'Oke',
+                                press: () {
+                                  Navigator.pop(context);
+                                },
+                                color: kPrimaryColor,
+                                width: size.width * 0.6,
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
                   Provider.of<DailyState>(context, listen: false).getStatus();
                 },
                 color: kPrimaryColor,
