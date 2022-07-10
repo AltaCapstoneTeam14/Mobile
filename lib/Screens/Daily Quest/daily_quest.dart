@@ -1,4 +1,5 @@
 import 'package:capstone_project/Components/background_primary.dart';
+import 'package:capstone_project/Components/com_helper.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
@@ -94,18 +95,15 @@ class _DailyPageState extends State<DailyPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: HomeTextStyle(
-                          size: 16,
-                          content:
-                              "Claim ${state.data.loginCount} Day(s) this week",
-                          color: kPrimaryColor,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      HomeTextStyle(
+                        size: 16,
+                        content:
+                            "Claim ${state.data.loginCount} Day(s) this week",
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.w500,
                       ),
                       GridView.builder(
                         padding: EdgeInsets.zero,
@@ -120,7 +118,7 @@ class _DailyPageState extends State<DailyPage> {
                           return Column(
                             children: [
                               Icon(
-                                Icons.money_rounded,
+                                Icons.monetization_on_outlined,
                                 size: 40,
                                 color: state.data.status! == 'claimed' &&
                                         i < state.data.loginCount!
@@ -137,6 +135,12 @@ class _DailyPageState extends State<DailyPage> {
                         },
                         itemCount: index.length,
                       ),
+                      const HomeTextStyle(
+                        size: 16,
+                        content: "Claim up to 7 days to get 500 coins",
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ],
                   ),
                 ),
@@ -151,49 +155,58 @@ class _DailyPageState extends State<DailyPage> {
                     )
                   : RoundedButton(
                       text: 'Claim',
-                      press: () {
-                        state.claimCoin();
-                        Provider.of<DailyState>(context, listen: false)
-                            .getStatus();
-                        Provider.of<HomeState>(context, listen: false)
-                            .getUser();
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (_) {
-                            return Dialog(
-                              backgroundColor: Colors.white,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    // The loading indicator
-                                    Icon(
-                                      Icons.money_rounded,
-                                      color: Colors.yellow.shade700,
-                                      size: 100,
-                                    ),
-                                    const HomeTextStyle(
-                                      size: 20,
-                                      content: 'You Get 100 Coin',
-                                      color: Colors.black,
-                                    ),
-                                    RoundedButton(
-                                      text: 'Oke',
-                                      press: () {
-                                        Navigator.pop(context);
-                                      },
-                                      color: kPrimaryColor,
-                                      width: size.width * 0.6,
-                                    )
-                                  ],
+                      press: () async {
+                        final getToast = ScaffoldMessenger.of(context);
+                        final getRespon = await state.claimCoin();
+                        if (getRespon.code! == '201') {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (_) {
+                              return Dialog(
+                                backgroundColor: Colors.white,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      // The loading indicator
+                                      Icon(
+                                        Icons.money_rounded,
+                                        color: Colors.yellow.shade700,
+                                        size: 100,
+                                      ),
+                                      HomeTextStyle(
+                                        size: 20,
+                                        content:
+                                            'You Get ${getRespon.data!.coinReward} Coin',
+                                        color: Colors.black,
+                                      ),
+                                      RoundedButton(
+                                        text: 'Oke',
+                                        press: () {
+                                          Provider.of<DailyState>(context,
+                                                  listen: false)
+                                              .getStatus();
+                                          Provider.of<HomeState>(context,
+                                                  listen: false)
+                                              .getUser();
+                                          Navigator.pop(context);
+                                        },
+                                        color: kPrimaryColor,
+                                        width: size.width * 0.6,
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
+                              );
+                            },
+                          );
+                        } else {
+                          getToast.showSnackBar(
+                              toastDialog(getRespon.message!, Colors.red));
+                        }
                       },
                       color: kPrimaryColor,
                       width: size.width * 0.9,
