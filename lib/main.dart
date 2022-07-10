@@ -1,4 +1,5 @@
 import 'package:capstone_project/Screens/Cashout/cashout.dart';
+import 'package:capstone_project/Screens/Daily%20Quest/daily_quest.dart';
 import 'package:capstone_project/Screens/Homepage/homepage.dart';
 import 'package:capstone_project/Screens/Kuota/kuota.dart';
 import 'package:capstone_project/Screens/Login/login.dart';
@@ -7,6 +8,7 @@ import 'package:capstone_project/Screens/Register/register.dart';
 import 'package:capstone_project/Screens/Topup/topup.dart';
 import 'package:capstone_project/State/auth_provider.dart';
 import 'package:capstone_project/State/cashout_state.dart';
+import 'package:capstone_project/State/daily_provider.dart';
 import 'package:capstone_project/State/history_provider.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/kuota_provider.dart';
@@ -60,6 +62,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => HistoryState(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => DailyState(),
+        ),
       ],
       builder: (context, child) => Consumer<AuthState>(
         builder: (context, state, child) => MaterialApp(
@@ -74,6 +79,7 @@ class MyApp extends StatelessWidget {
             '/pulsa': (_) => const PulsaPage(),
             '/kuota': (_) => const KuotaPage(),
             '/cashout': (_) => const CashoutPage(),
+            '/daily': (_) => const DailyPage(),
           },
           home: state.isAuth
               ? const HomePage()
