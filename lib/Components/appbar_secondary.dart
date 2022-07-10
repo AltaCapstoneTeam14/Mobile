@@ -22,7 +22,12 @@ class AppbarSecondary extends StatelessWidget implements PreferredSizeWidget {
         color: Colors.white,
         size: 32,
       ),
-      title: Text(content),
+      title: Text(
+        content,
+        style: const TextStyle(
+          fontFamily: 'Poppins',
+        ),
+      ),
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
