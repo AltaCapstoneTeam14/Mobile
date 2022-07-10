@@ -60,7 +60,7 @@ class _DailyPageState extends State<DailyPage> {
                     HomeTextStyle(
                       size: 25,
                       content:
-                          "${Provider.of<HomeState>(context, listen: false).data.coin!.amount}",
+                          "${Provider.of<HomeState>(context).data.coin!.amount}",
                       fontWeight: FontWeight.w500,
                     ),
                     Padding(
@@ -142,52 +142,62 @@ class _DailyPageState extends State<DailyPage> {
                 ),
               ),
               SizedBox(height: size.height * 0.45),
-              RoundedButton(
-                text: 'Claim',
-                press: () {
-                  state.claimCoin();
-                  showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (_) {
-                      return Dialog(
-                        // The background color
-                        backgroundColor: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              // The loading indicator
-                              Icon(
-                                Icons.money_rounded,
-                                color: Colors.yellow.shade700,
-                                size: 100,
+              state.data.status! == 'claimed'
+                  ? const HomeTextStyle(
+                      size: 16,
+                      content: "You've taken the coins today",
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    )
+                  : RoundedButton(
+                      text: 'Claim',
+                      press: () {
+                        state.claimCoin();
+                        Provider.of<DailyState>(context, listen: false)
+                            .getStatus();
+                        Provider.of<HomeState>(context, listen: false)
+                            .getUser();
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (_) {
+                            return Dialog(
+                              backgroundColor: Colors.white,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    // The loading indicator
+                                    Icon(
+                                      Icons.money_rounded,
+                                      color: Colors.yellow.shade700,
+                                      size: 100,
+                                    ),
+                                    const HomeTextStyle(
+                                      size: 20,
+                                      content: 'You Get 100 Coin',
+                                      color: Colors.black,
+                                    ),
+                                    RoundedButton(
+                                      text: 'Oke',
+                                      press: () {
+                                        Navigator.pop(context);
+                                      },
+                                      color: kPrimaryColor,
+                                      width: size.width * 0.6,
+                                    )
+                                  ],
+                                ),
                               ),
-                              const HomeTextStyle(
-                                size: 20,
-                                content: 'You Get 100 Coin',
-                                color: Colors.black,
-                              ),
-                              RoundedButton(
-                                text: 'Oke',
-                                press: () {
-                                  Navigator.pop(context);
-                                },
-                                color: kPrimaryColor,
-                                width: size.width * 0.6,
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                  Provider.of<DailyState>(context, listen: false).getStatus();
-                },
-                color: kPrimaryColor,
-                width: size.width * 0.9,
-              )
+                            );
+                          },
+                        );
+                      },
+                      color: kPrimaryColor,
+                      width: size.width * 0.9,
+                    )
             ],
           );
         },
