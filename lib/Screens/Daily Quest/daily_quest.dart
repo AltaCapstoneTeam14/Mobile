@@ -173,7 +173,7 @@ class _DailyPageState extends State<DailyPage> {
                                     children: <Widget>[
                                       // The loading indicator
                                       Icon(
-                                        Icons.money_rounded,
+                                        Icons.monetization_on_outlined,
                                         color: Colors.yellow.shade700,
                                         size: 100,
                                       ),
