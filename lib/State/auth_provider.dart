@@ -41,6 +41,11 @@ class AuthState extends ChangeNotifier {
     return response;
   }
 
+  Future<LoginResponse?> forgotUser(LoginModel loginModel) async {
+    final response = await authService.forgotPass(loginModel);
+    return response;
+  }
+
   Future<void> logout() async {
     _idToken = null;
 

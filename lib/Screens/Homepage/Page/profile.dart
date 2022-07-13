@@ -4,6 +4,7 @@ import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Constant/color.dart';
+import 'package:capstone_project/Screens/Homepage/Page/components/about_us.dart';
 import 'package:capstone_project/Screens/Profile/edit_password.dart';
 import 'package:capstone_project/Screens/Profile/edit_profil.dart';
 import 'package:capstone_project/State/auth_provider.dart';
@@ -92,7 +93,14 @@ class _ProfileState extends State<Profile> {
             ),
             MenuProfile(
               name: 'Tentang Aplikasi',
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutPage(),
+                  ),
+                );
+              },
             ),
             MenuProfile(
               name: 'Keluar',
