@@ -1,9 +1,9 @@
 class LoginModel {
-  late String email;
-  late String password;
+  String? email;
+  String? password;
 
   LoginModel({
-    required this.email,
-    required this.password,
+    this.email,
+    this.password,
   });
 }

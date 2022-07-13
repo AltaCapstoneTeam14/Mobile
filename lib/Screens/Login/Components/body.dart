@@ -3,9 +3,11 @@ import 'package:capstone_project/Components/com_helper.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/rounded_input_field.dart';
 import 'package:capstone_project/Components/rounded_input_password.dart';
+import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
 import 'package:capstone_project/Model/Login/Request/login_model.dart';
 import 'package:capstone_project/Screens/Login/Components/background.dart';
+import 'package:capstone_project/Screens/Login/Components/forgot_password.dart';
 import 'package:capstone_project/State/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +44,7 @@ class _BodyState extends State<Body> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: size.height * 0.1),
+                  SizedBox(height: size.height * 0.07),
                   Row(
                     children: <Widget>[
                       const Padding(
@@ -118,6 +120,28 @@ class _BodyState extends State<Body> {
                       }
                     },
                     width: size.width * 0.8,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ForgotPage(),
+                        ),
+                      );
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: 50),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: HomeTextStyle(
+                          size: 14,
+                          content: 'Forgot Password',
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(height: size.height * 0.05),
                   AlreadyHaveAnAccountCheck(

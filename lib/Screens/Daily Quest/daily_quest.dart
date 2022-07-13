@@ -120,8 +120,7 @@ class _DailyPageState extends State<DailyPage> {
                               Icon(
                                 Icons.monetization_on_outlined,
                                 size: 40,
-                                color: state.data.status! == 'claimed' &&
-                                        i < state.data.loginCount!
+                                color: i < state.data.loginCount!
                                     ? Colors.yellow.shade700
                                     : Colors.grey,
                               ),

@@ -154,7 +154,7 @@ class _CashoutPageState extends State<CashoutPage> {
                           } else {
                             getToast.showSnackBar(
                               toastDialog(
-                                "Please select the topup amount",
+                                "Please select the cashout amount",
                                 Colors.red,
                               ),
                             );

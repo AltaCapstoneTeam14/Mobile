@@ -51,4 +51,24 @@ class AuthService {
       throw Exception(e);
     }
   }
+
+  Future<LoginResponse?> forgotPass(LoginModel lModel) async {
+    try {
+      Response response = await _dio.post(
+        '$baseUrl/reset-password/request',
+        data: {
+          'email': lModel.email,
+        },
+        options: Options(
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
+      );
+      final getData = LoginResponse.fromJson(response.data);
+      return getData;
+    } on DioError catch (e) {
+      throw Exception(e);
+    }
+  }
 }
