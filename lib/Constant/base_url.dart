@@ -1,1 +1,1 @@
-const baseUrl = "http://44.201.153.46:8081/api/v1";
+const baseUrl = "http://44.203.0.77/api/v1";
