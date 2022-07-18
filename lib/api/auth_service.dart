@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 class AuthService {
   final _dio = Dio();
 
-  Future register(RegisterModel pModel) async {
+  Future<RegisterResponse?> register(RegisterModel pModel) async {
     try {
       Response response = await _dio.post(
         '$baseUrl/auth/register',
