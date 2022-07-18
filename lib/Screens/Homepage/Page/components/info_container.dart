@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class InfoContainer extends StatelessWidget {
   final String phone;
   final String balance;
+  final String coin;
   final Size size;
   const InfoContainer({
     Key? key,
     required this.size,
     required this.phone,
     required this.balance,
+    required this.coin,
   }) : super(key: key);
 
   @override
@@ -66,8 +68,8 @@ class InfoContainer extends StatelessWidget {
                   scale: 25,
                 ),
               ),
-              const HomeTextStyle(
-                content: "500",
+              HomeTextStyle(
+                content: coin,
                 size: 20,
               ),
             ],

@@ -1,7 +1,12 @@
+import 'package:capstone_project/Components/com_helper.dart';
+import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Constant/color.dart';
+import 'package:capstone_project/Screens/Homepage/Page/components/about_us.dart';
+import 'package:capstone_project/Screens/Profile/edit_password.dart';
+import 'package:capstone_project/Screens/Profile/edit_profil.dart';
 import 'package:capstone_project/State/auth_provider.dart';
 import 'package:capstone_project/State/enum.dart';
 import 'package:capstone_project/State/profile_provider.dart';
@@ -27,6 +32,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Consumer<ProfileState>(
       builder: (BuildContext context, state, child) {
         if (state.stateType == StateType.loading) {
@@ -39,26 +45,47 @@ class _ProfileState extends State<Profile> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 50),
-              child: ListTile(
-                title: HomeTextStyle(
-                  size: 23,
-                  content: state.data.name.toString(),
-                  color: kPrimaryDarkColor,
-                ),
-                subtitle: HomeTextStyle(
-                  size: 13,
-                  content: state.data.email.toString(),
-                  color: kPrimaryDarkColor,
-                ),
-                trailing: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: kPrimaryDarkColor,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfilPage(
+                        name: state.data.name!,
+                        email: state.data.email!,
+                        phone: state.data.phone!,
+                      ),
+                    ),
+                  );
+                },
+                child: ListTile(
+                  title: HomeTextStyle(
+                    size: 23,
+                    content: state.data.name!,
+                    color: kPrimaryDarkColor,
+                  ),
+                  subtitle: HomeTextStyle(
+                    size: 13,
+                    content: state.data.email!,
+                    color: kPrimaryDarkColor,
+                  ),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: kPrimaryDarkColor,
+                  ),
                 ),
               ),
             ),
             MenuProfile(
               name: 'Ubah Password',
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const EditPassPage(),
+                  ),
+                );
+              },
             ),
             MenuProfile(
               name: 'Bantuan',
@@ -66,13 +93,33 @@ class _ProfileState extends State<Profile> {
             ),
             MenuProfile(
               name: 'Tentang Aplikasi',
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutPage(),
+                  ),
+                );
+              },
             ),
             MenuProfile(
               name: 'Keluar',
               color: Colors.red,
               press: () {
-                Provider.of<AuthState>(context, listen: false).logout();
+                bottomSheetPrimary(
+                  context,
+                  size,
+                  "Konfirmasi Keluar",
+                  RoundedButton(
+                    text: "Logout",
+                    press: () {
+                      Navigator.pop(context);
+                      Provider.of<AuthState>(context, listen: false).logout();
+                    },
+                    color: Colors.red,
+                    width: size.width * 0.9,
+                  ),
+                );
               },
             ),
           ],

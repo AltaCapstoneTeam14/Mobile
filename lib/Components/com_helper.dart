@@ -1,3 +1,4 @@
+import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -22,17 +23,80 @@ toastDialog(String message, Color color) {
   return snackBar;
 }
 
-// dialogLoading() {
-//   return Dialog(
-//     child: Padding(
-//       padding: const EdgeInsets.all(15),
-// child: LoadingAnimationWidget.hexagonDots(
-//   color: kPrimaryColor,
-//   size: 50,
-// ),
-//     ),
-//   );
-// }
+Future<dynamic> bottomSheetPrimary(
+    BuildContext context, Size size, String title, Widget child) {
+  return showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30.0),
+        topRight: Radius.circular(30.0),
+      ),
+    ),
+    backgroundColor: Colors.white,
+    builder: (_) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 10,
+                  offset: Offset(0, 3),
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                const Divider(
+                  thickness: 5,
+                  indent: 170,
+                  endIndent: 170,
+                  color: Colors.grey,
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      HomeTextStyle(
+                        size: 16,
+                        content: title,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          size: 35,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          child,
+        ],
+      );
+    },
+  );
+}
 
 fetchData(BuildContext context) async {
   // show the loading dialog

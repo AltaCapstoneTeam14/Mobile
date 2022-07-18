@@ -1,10 +1,21 @@
+import 'package:capstone_project/Screens/Cashout/cashout.dart';
+import 'package:capstone_project/Screens/Daily%20Quest/daily_quest.dart';
 import 'package:capstone_project/Screens/Homepage/homepage.dart';
+import 'package:capstone_project/Screens/Kuota/kuota.dart';
 import 'package:capstone_project/Screens/Login/login.dart';
+import 'package:capstone_project/Screens/Pulsa/pulsa.dart';
 import 'package:capstone_project/Screens/Register/register.dart';
 import 'package:capstone_project/Screens/Topup/topup.dart';
 import 'package:capstone_project/State/auth_provider.dart';
+import 'package:capstone_project/State/cashout_state.dart';
+import 'package:capstone_project/State/daily_provider.dart';
+import 'package:capstone_project/State/history_provider.dart';
 import 'package:capstone_project/State/home_provider.dart';
+import 'package:capstone_project/State/kuota_provider.dart';
+import 'package:capstone_project/State/operator_provider.dart';
+import 'package:capstone_project/State/pembayaran_provider.dart';
 import 'package:capstone_project/State/profile_provider.dart';
+import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:capstone_project/State/topup_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +44,27 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => TopupState(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => PaymentState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PulsaState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OperatorState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => KuotaState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CashoutState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HistoryState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DailyState(),
+        ),
       ],
       builder: (context, child) => Consumer<AuthState>(
         builder: (context, state, child) => MaterialApp(
@@ -44,6 +76,10 @@ class MyApp extends StatelessWidget {
             '/register': (_) => const ResgisterPage(),
             '/homepage': (_) => const HomePage(),
             '/topup': (_) => const TopupPage(),
+            '/pulsa': (_) => const PulsaPage(),
+            '/kuota': (_) => const KuotaPage(),
+            '/cashout': (_) => const CashoutPage(),
+            '/daily': (_) => const DailyPage(),
           },
           home: state.isAuth
               ? const HomePage()

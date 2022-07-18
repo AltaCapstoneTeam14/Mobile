@@ -1,9 +1,13 @@
+import 'package:capstone_project/Components/appbar_primary.dart';
+import 'package:capstone_project/Components/com_helper.dart';
 import 'package:capstone_project/Components/error_page.dart';
 import 'package:capstone_project/Components/loading_animation.dart';
+import 'package:capstone_project/Components/product_card.dart';
 import 'package:capstone_project/Components/rounded_button.dart';
 import 'package:capstone_project/Components/scroll_behavior.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Constant/color.dart';
+import 'package:capstone_project/Screens/Topup/components/konfirmasi_topup.dart';
 import 'package:capstone_project/State/enum.dart';
 import 'package:capstone_project/State/topup_provider.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +37,10 @@ class _TopupPageState extends State<TopupPage> {
     });
   }
 
+  int? harga;
+  int? total;
+  int? id;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -52,7 +60,7 @@ class _TopupPageState extends State<TopupPage> {
             width: double.infinity,
             height: size.height,
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -71,31 +79,59 @@ class _TopupPageState extends State<TopupPage> {
                       ),
                       ScrollConfiguration(
                         behavior: MyBehavior(),
-                        child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
+                        child: SizedBox(
+                          height: size.height * 0.715,
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                            ),
+                            shrinkWrap: true,
+                            itemBuilder: (ctx, i) {
+                              return ProductCard(
+                                amount: state.data[i].amount.toString(),
+                                onTap: () {
+                                  checkOption(i + 1);
+                                  harga = state.data[i].amount;
+                                  total = state.data[i].grossAmount;
+                                  id = state.data[i].id;
+                                },
+                                selected: i + 1 == optionSelected,
+                                url: "assets/icons/gold-coins.png",
+                              );
+                            },
+                            itemCount: state.data.length,
                           ),
-                          shrinkWrap: true,
-                          itemBuilder: (ctx, i) {
-                            return ProductCard(
-                              amount: state.data[i].amount.toString(),
-                              onTap: () {
-                                checkOption(i + 1);
-                              },
-                              selected: i + 1 == optionSelected,
-                            );
-                          },
-                          itemCount: state.data.length,
                         ),
                       ),
                     ],
                   ),
                   RoundedButton(
                     text: "Lanjut",
-                    press: () {},
                     color: kPrimaryColor,
                     width: size.width,
+                    press: () {
+                      final getToast = ScaffoldMessenger.of(context);
+                      if (optionSelected > 0) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ConfirmTopup(
+                              amount: harga!,
+                              grossAmount: total!,
+                              id: id!,
+                            ),
+                          ),
+                        );
+                      } else {
+                        getToast.showSnackBar(
+                          toastDialog(
+                            "Please select the topup amount",
+                            Colors.red,
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
@@ -103,92 +139,6 @@ class _TopupPageState extends State<TopupPage> {
           );
         },
       ),
-    );
-  }
-}
-
-class ProductCard extends StatefulWidget {
-  final String amount;
-  final VoidCallback onTap;
-  final bool selected;
-  const ProductCard({
-    Key? key,
-    required this.amount,
-    required this.onTap,
-    required this.selected,
-  }) : super(key: key);
-
-  @override
-  State<ProductCard> createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          side: BorderSide(
-            color: kPrimaryColor,
-            width: 4,
-            style: widget.selected ? BorderStyle.solid : BorderStyle.none,
-          ),
-        ),
-        elevation: 5,
-        margin: const EdgeInsets.all(6),
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/icons/gold-coins.png"),
-              alignment: Alignment.topCenter,
-            ),
-          ),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: HomeTextStyle(
-                  size: 14,
-                  content: "Rp. ${widget.amount}",
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AppBarPrimary extends StatelessWidget implements PreferredSizeWidget {
-  final String content;
-  const AppBarPrimary({
-    Key? key,
-    required this.content,
-  }) : super(key: key);
-
-  @override
-  Size get preferredSize => const Size.fromHeight(60);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      titleTextStyle: const TextStyle(
-        fontFamily: 'Poppins',
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: Colors.black,
-      ),
-      iconTheme: const IconThemeData(
-        color: Colors.black,
-        size: 32,
-      ),
-      title: Text(content),
-      centerTitle: true,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
     );
   }
 }

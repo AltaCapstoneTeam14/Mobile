@@ -21,15 +21,3 @@ class LoginResponse {
   static Map<String, dynamic> toJson(LoginResponse loginResponse) =>
       _$LoginResponseToJson(loginResponse);
 }
-
-// class DataToken {
-//   String? token;
-
-//   DataToken({
-//     this.token,
-//   });
-
-//   DataToken.fromJson(Map<String, dynamic> json) {
-//     token = json['token'];
-//   }
-// }

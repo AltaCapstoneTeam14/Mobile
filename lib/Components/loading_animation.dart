@@ -10,9 +10,9 @@ class LoadingAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: LoadingAnimationWidget.inkDrop(
+      child: LoadingAnimationWidget.waveDots(
         color: kPrimaryColor,
-        size: 60,
+        size: 40,
       ),
     );
   }

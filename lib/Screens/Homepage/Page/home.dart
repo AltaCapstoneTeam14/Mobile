@@ -1,11 +1,14 @@
 import 'package:capstone_project/Components/scroll_behavior.dart';
+import 'package:capstone_project/Components/shimmer_widget.dart';
 import 'package:capstone_project/Components/text_style.dart';
 import 'package:capstone_project/Components/error_page.dart';
-import 'package:capstone_project/Components/loading_animation.dart';
 import 'package:capstone_project/Screens/Homepage/Page/components/info_container.dart';
 import 'package:capstone_project/Screens/Homepage/Page/components/promo_widgets.dart';
 import 'package:capstone_project/State/home_provider.dart';
 import 'package:capstone_project/State/enum.dart';
+import 'package:capstone_project/State/kuota_provider.dart';
+import 'package:capstone_project/State/pembayaran_provider.dart';
+import 'package:capstone_project/State/pulsa_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_project/Constant/color.dart';
 import 'package:provider/provider.dart';
@@ -37,98 +40,141 @@ class _HomeState extends State<Home> {
     return Consumer<HomeState>(
       builder: (BuildContext context, state, child) {
         if (state.stateType == StateType.loading) {
-          return const LoadingAnimation();
+          return Column(
+            children: [
+              ShimmerWidgets(
+                child: InfoContainer(
+                  size: widget.size,
+                  balance: "100000",
+                  phone: "000000000000",
+                  coin: '500',
+                ),
+              ),
+            ],
+          );
         }
         if (state.stateType == StateType.error) {
           return const ErrorPage();
         }
         return ScrollConfiguration(
           behavior: MyBehavior(),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: <Widget>[
-                InfoContainer(
-                  size: widget.size,
-                  balance: state.data.balance!.amount.toString(),
-                  phone: state.data.phone.toString(),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 15)),
-                FiturButton(size: widget.size),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15, bottom: 10, top: 15),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: HomeTextStyle(
-                        size: 16,
-                        content: 'Service',
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              final getState = Provider.of<HomeState>(context, listen: false);
+              getState.getUser();
+            },
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: <Widget>[
+                  InfoContainer(
+                    size: widget.size,
+                    balance: state.data.balance!.amount.toString(),
+                    phone: state.data.phone.toString(),
+                    coin: state.data.coin!.amount.toString(),
                   ),
-                ),
-                GridView.count(
-                  crossAxisCount: 3,
-                  shrinkWrap: true,
-                  childAspectRatio: 1.2,
-                  children: const <Widget>[
-                    PilihanButton(
+                  const Padding(padding: EdgeInsets.only(top: 15)),
+                  FiturButton(size: widget.size),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15, bottom: 10, top: 15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: HomeTextStyle(
+                          size: 16,
+                          content: 'Service',
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  GridView.count(
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    childAspectRatio: 1.2,
+                    children: <Widget>[
+                      PilihanButton(
                         url: 'assets/icons/icon-pulsa.png',
                         scale: 2,
-                        content: 'Pulsa'),
-                    PilihanButton(
+                        content: 'Pulsa',
+                        onTap: () {
+                          final getPulsa =
+                              Provider.of<PulsaState>(context, listen: false);
+                          getPulsa.changeState(StateType.loading);
+                          getPulsa.addMethod('null');
+                          Navigator.pushNamed(context, '/pulsa');
+                        },
+                        turn: true,
+                      ),
+                      PilihanButton(
                         url: 'assets/icons/paket-data.png',
                         scale: 2,
-                        content: 'Paket Data'),
-                    PilihanButton(
+                        content: 'Paket Data',
+                        onTap: () {
+                          final getKuota =
+                              Provider.of<KuotaState>(context, listen: false);
+                          getKuota.changeState(StateType.loading);
+                          getKuota.addMethod('null');
+                          Navigator.pushNamed(context, '/kuota');
+                        },
+                        turn: true,
+                      ),
+                      PilihanButton(
                         url: 'assets/icons/voucher.png',
                         scale: 2,
-                        content: 'Voucher'),
-                    PilihanButton(
+                        content: 'Voucher',
+                        onTap: () {},
+                      ),
+                      PilihanButton(
                         url: 'assets/icons/e-money.png',
                         scale: 2,
-                        content: 'E-Money'),
-                    PilihanButton(
-                      url: 'assets/icons/drop.png',
-                      scale: 2,
-                      content: 'PDAM',
-                    ),
-                    PilihanButton(
+                        content: 'E-Money',
+                        onTap: () {},
+                      ),
+                      PilihanButton(
+                        url: 'assets/icons/drop.png',
+                        scale: 2,
+                        content: 'PDAM',
+                        onTap: () {},
+                      ),
+                      PilihanButton(
                         url: 'assets/icons/lighting.png',
                         scale: 2,
-                        content: 'PLN'),
-                  ],
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15, bottom: 10),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: HomeTextStyle(
-                        size: 16,
-                        content: 'Promo',
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold),
+                        content: 'PLN',
+                        onTap: () {},
+                      ),
+                    ],
                   ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: const <Widget>[
-                        PromoWidgets(
-                          url: 'assets/images/promo-1.png',
-                        ),
-                        PromoWidgets(
-                          url: 'assets/images/promo-2.png',
-                        ),
-                        PromoWidgets(
-                          url: 'assets/images/promo-3.png',
-                        ),
-                      ],
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15, bottom: 10),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: HomeTextStyle(
+                          size: 16,
+                          content: 'Promo',
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                )
-              ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        children: const <Widget>[
+                          PromoWidgets(
+                            url: 'assets/images/promo-1.png',
+                          ),
+                          PromoWidgets(
+                            url: 'assets/images/promo-2.png',
+                          ),
+                          PromoWidgets(
+                            url: 'assets/images/promo-3.png',
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -138,31 +184,39 @@ class _HomeState extends State<Home> {
 }
 
 class PilihanButton extends StatelessWidget {
+  final VoidCallback onTap;
   final String url;
   final double scale;
   final String content;
+  final bool turn;
 
-  const PilihanButton({
-    Key? key,
-    required this.url,
-    required this.scale,
-    required this.content,
-  }) : super(key: key);
+  const PilihanButton(
+      {Key? key,
+      required this.url,
+      required this.scale,
+      required this.content,
+      required this.onTap,
+      this.turn = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          url,
-          scale: scale,
-        ),
-        HomeTextStyle(
-          size: 13,
-          content: content,
-          color: Colors.black,
-        ),
-      ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Image.asset(
+            url,
+            scale: scale,
+            color: turn ? null : Colors.grey.shade300,
+          ),
+          HomeTextStyle(
+            size: 13,
+            content: content,
+            color: turn ? Colors.black : Colors.grey.shade400,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -193,27 +247,27 @@ class FiturButton extends StatelessWidget {
               urlIcon: 'assets/icons/planner.png',
               scale: 3,
               content: 'Daily Quest',
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/daily');
+              },
             ),
             HomeFitur(
               urlIcon: 'assets/icons/topup.png',
               scale: 2.5,
               content: 'Top Up',
               onTap: () {
+                Provider.of<PaymentState>(context, listen: false)
+                    .addMethod('null');
                 Navigator.pushNamed(context, '/topup');
               },
-            ),
-            HomeFitur(
-              urlIcon: 'assets/icons/transfer.png',
-              scale: 2.8,
-              content: 'Transfer',
-              onTap: () {},
             ),
             HomeFitur(
               urlIcon: 'assets/icons/cashout.png',
               scale: 3,
               content: 'Cashout',
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/cashout');
+              },
             ),
           ],
         ),

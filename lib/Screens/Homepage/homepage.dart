@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final page = [
-      const History(),
+      const Riwayat(),
       Home(size: size),
       const Profile(),
     ];
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
           "Profile",
         ],
         icons: const [
-          Icons.history,
+          Icons.history_rounded,
           Icons.home,
           Icons.people_alt,
         ],
@@ -81,11 +81,13 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
         fit: BoxFit.cover,
         scale: 1.5,
       ),
+      centerTitle: false,
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.only(right: 12),
           child: Icon(
             Icons.notifications_active,
             color: Colors.yellow.shade600,
